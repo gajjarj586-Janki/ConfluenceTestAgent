@@ -1,0 +1,44 @@
+{
+  "name": "confluence-test-agent",
+  "version": "1.0.0",
+  "description": "AI Test Agent — Confluence-driven Playwright + Cucumber automation",
+  "type": "module",
+  "scripts": {
+    "fetch:features": "node scripts/fetchFeatures.js",
+    "test:cucumber": "npx cucumber-js --config cucumber.js",
+    "test:contactus": "npx cucumber-js --config cucumber.js --tags @contact-us",
+    "report:pdf": "node scripts/generateReport.js",
+    "steps:generate": "node scripts/generateStepDefs.js",
+    "steps:generate:mcp": "node scripts/generateStepDefs.js --mcp",
+    "steps:generate:all": "node scripts/generateStepDefs.js --all",
+    "steps:generate:fad": "node scripts/generateStepDefs.js --feature FindADealer-FIFO",
+    "steps:generate:fad:mcp": "node scripts/generateStepDefs.js --mcp --feature FindADealer-FIFO",
+    "agent:run": "node scripts/agentOrchestrator.js",
+    "agent:run:no-gen": "node scripts/agentOrchestrator.js --skip-fetch --skip-generate",
+    "agent:claude-fix": "node scripts/agentOrchestrator.js --claude-fix",
+    "agent:fetch-and-test": "npm run fetch:features && npm run test:cucumber",
+    "agent:full": "npm run fetch:features && npm run test:cucumber && npm run report:pdf",
+    "feature:enable": "node scripts/setFeatureRun.js",
+    "feature:add-run-column": "node scripts/addRunColumn.js",
+    "feature:add-report-column": "node scripts/addReportColumn.js",
+    "report:upload": "node scripts/uploadReportToConfluence.js",
+    "fix:loop": "node scripts/claudeFixLoop.js",
+    "fix:loop:smoke": "node scripts/claudeFixLoop.js --tags @smoke",
+    "fix:loop:footer": "node scripts/claudeFixLoop.js --tags @footerSubscribe",
+    "fix:mcp": "node scripts/mcpAutoFixer.js",
+    "fix:mcp:smoke": "node scripts/mcpAutoFixer.js --tags @smoke",
+    "fix:mcp:once": "node scripts/mcpAutoFixer.js --no-rerun",
+    "agent:mcp-fix": "node scripts/agentOrchestrator.js --mcp-fix"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^12.7.0",
+    "@playwright/test": "^1.58.1",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/server-filesystem": "^2026.1.14",
+    "@playwright/mcp": "^0.0.70",
+    "@types/node": "^25.2.0"
+  }
+}

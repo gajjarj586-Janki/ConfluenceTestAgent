@@ -1,0 +1,21 @@
+node_modules/
+.env
+.cache/
+.playwright-mcp/
+screenshots/
+test-results/
+excel-reports/
+allure-results/
+allure-report/
+*.log
+confluence_*.json
+confluence_*.html
+
+# Local debug artifacts (one-off scripts and dumps, not committed)
+_*.mjs
+_*.cjs
+_debug_*.png
+_modal_dump.html
+_popup_dump.json
+kona-*.png
+test.txt

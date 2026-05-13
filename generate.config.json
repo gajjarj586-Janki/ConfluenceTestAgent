@@ -1,0 +1,13 @@
+{
+  "_comment": "Controls which feature files the step generator processes by default.",
+  "_usage": [
+    "npm run steps:generate            — processes only features listed in 'allow'",
+    "npm run steps:generate:mcp        — same, but with Playwright MCP modal inspection",
+    "npm run steps:generate -- --all   — processes ALL feature files (ignore allowlist)",
+    "npm run steps:generate -- --feature MyFeature  — process one feature regardless of list"
+  ],
+  "allow": [
+    "FindADealer-FIFO",
+    "talk-to-an-expert"
+  ]
+}
