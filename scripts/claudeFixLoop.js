@@ -213,15 +213,22 @@ function parseFailures() {
   for (const feature of report) {
     for (const element of (feature.elements || [])) {
       const allSteps = (element.steps || []).filter(s => !['Before', 'After'].includes((s.keyword || '').trim()));
-      const failedSteps = allSteps.filter(
-        s => s.result?.status === 'failed' || s.result?.status === 'undefined'
-      );
+      const BAD = new Set(['failed', 'ambiguous', 'undefined', 'pending']);
+      const failedSteps = allSteps.filter(s => BAD.has(s.result?.status));
       if (failedSteps.length > 0) {
+        const tags = (element.tags || []).map(t => t.name).join(' ');
+        // Skip scenarios explicitly opted out of auto-fix. These are usually
+        // data/content-driven assertions (e.g. live-site price checks) where
+        // the failure represents a real product issue, not a test-code bug.
+        if (/@no-autofix\b/.test(tags)) {
+          console.log(`  ⏭  Skipping @no-autofix scenario: ${element.name}`);
+          continue;
+        }
         failures.push({
           feature: feature.name,
           featureUri: feature.uri || '',
           scenario: element.name,
-          tags: (element.tags || []).map(t => t.name).join(' '),
+          tags,
           // Full step sequence — tells Claude what interactions to perform to reach failure state
           allSteps: allSteps.map(s => ({
             keyword: (s.keyword || '').trim(),
@@ -404,6 +411,21 @@ function diagnoseError(errorMsg) {
 
   const diagnosis = [];
 
+  // Pattern: page.goto called with a non-URL string (e.g. a menu label).
+  // Almost always means the auto-generator misclassified a "navigates to X menu"
+  // step as a URL navigation when it was actually a header click.
+  if (/page\.goto:\s*Protocol error.*Cannot navigate to invalid URL/i.test(errorMsg) ||
+      /navigating to "[^"]*"(?!http)/i.test(errorMsg)) {
+    diagnosis.push('⚠️  ROOT CAUSE — page.goto() was called with a value that is NOT a URL.');
+    diagnosis.push('   The step implementation is treating a menu label / page name as a URL.');
+    diagnosis.push('   FIX: Replace page.goto() with the correct interaction:');
+    diagnosis.push('     • "navigates to the X menu"  → hover/click the header nav element labeled X.');
+    diagnosis.push('     • "opens the X website"      → page.goto() the brand homepage');
+    diagnosis.push('       (resolve from this.pageUrls OR fall back to https://www.<brand>.com[.au]/).');
+    diagnosis.push('     • "navigates to the X page"  → resolve URL via this.pageUrls; if missing,');
+    diagnosis.push('       click the matching nav link instead of guessing a URL.');
+  }
+
   // Pattern: wrong element matched + intercepted click
   const resolvedTo = errorMsg.match(/locator resolved to <([^>]+)>/);
   const interceptedBy = [...errorMsg.matchAll(/- <([^>]+)>(?:[^\n]*)intercepts pointer events/g)].map(m => m[1]);
@@ -482,6 +504,22 @@ function buildPrompt(failures, relevantStepFiles, allStepFiles, locatorMap = {})
     lines.push(`**Scenario:** ${failure.scenario}`);
     if (failure.featureUri) {
       lines.push(`**Feature file:** ${path.join(ROOT, failure.featureUri)}`);
+
+      // Include the FULL feature file text so Claude can interpret the BDD intent
+      // as a human reader would — not just the parsed step name. This is critical
+      // for catching cases where the auto-generator misclassified a step
+      // (e.g. "navigates to the X menu" wrongly emitted as page.goto(url)).
+      try {
+        const featurePath = path.isAbsolute(failure.featureUri)
+          ? failure.featureUri
+          : path.join(ROOT, failure.featureUri);
+        const featureText = fs.readFileSync(featurePath, 'utf-8');
+        lines.push('');
+        lines.push('**Full feature file (read this and interpret each step like a human tester would):**');
+        lines.push('```gherkin');
+        lines.push(featureText.trim());
+        lines.push('```');
+      } catch { /* ignore — fall back to step list only */ }
     }
 
     if (failure.allSteps?.length) {
@@ -567,6 +605,20 @@ function buildPrompt(failures, relevantStepFiles, allStepFiles, locatorMap = {})
   lines.push('   Avoid broad `:has-text()` selectors that can match the wrong element.');
   lines.push('');
   lines.push('## Fix Instructions');
+  lines.push('');
+  lines.push('**FIRST PRINCIPLE — Read the feature file like a human tester.**');
+  lines.push('Each Gherkin step describes an action a real person would perform in a browser.');
+  lines.push('Translate the *intent*, not the literal words:');
+  lines.push('  • "the user opens the X website"   → navigate to that brand\'s public homepage');
+  lines.push('    (e.g. "Hyundai Australia website" → https://www.hyundai.com.au/). Never pass a');
+  lines.push('    non-URL string to page.goto().');
+  lines.push('  • "the user navigates to the X menu" → hover/click the top-level nav item labeled X');
+  lines.push('    in the header/nav region. This is NOT page.goto(X) — X is a menu label.');
+  lines.push('  • "the user clicks the X submenu"   → click the link/button labeled X inside the');
+  lines.push('    flyout that appeared after the parent menu was opened.');
+  lines.push('  • "the X page should be displayed"  → assert URL slug or visible heading matches X.');
+  lines.push('If any existing step implementation contradicts this human reading (e.g. it does');
+  lines.push('page.goto on a menu label), REWRITE it. Do not just tweak selectors.');
   lines.push('');
   lines.push('1. Read the step file and the corresponding feature file first.');
   lines.push('2. Follow the **Pre-analysed diagnosis** for each failing step — it identifies the exact');

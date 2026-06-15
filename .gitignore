@@ -19,3 +19,6 @@ _modal_dump.html
 _popup_dump.json
 kona-*.png
 test.txt
+
+# PIM auth artifacts that may embed JWTs / credentials
+scripts/_pim_*.json

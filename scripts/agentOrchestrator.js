@@ -79,14 +79,25 @@ async function stepFetchData() {
     r.Status && r.Status.toLowerCase().trim() === 'yes'
   );
 
+  // Allow .env TARGET_ENVIRONMENT to override / supply the active env when
+  // Confluence has nothing flagged. We deliberately do NOT default to Production
+  // — silently switching to prod URLs is dangerous.
+  const envOverride = (process.env.TARGET_ENVIRONMENT || '').trim();
+
   if (activeEnvs.length === 0) {
-    console.log('⚠️  No environment has Status = "Yes" in Confluence. Falling back to Production.');
-    activeEnvs.push({ Environment: 'Production', URL: '' });
+    if (envOverride) {
+      console.log(`⚠️  No environment has Status = "Yes" in Confluence. Using TARGET_ENVIRONMENT=${envOverride} from .env.`);
+      activeEnvs.push({ Environment: envOverride, URL: '' });
+    } else {
+      console.log('⚠️  No environment has Status = "Yes" in Confluence and TARGET_ENVIRONMENT is not set in .env.');
+      console.log('   Defaulting to Stage to avoid accidentally hitting Production.');
+      activeEnvs.push({ Environment: 'Stage', URL: '' });
+    }
   }
 
   // Use the first active environment
   const activeEnv = activeEnvs[0];
-  const activeEnvName = activeEnv.Environment || activeEnv.TestName || 'Production';
+  const activeEnvName = activeEnv.Environment || activeEnv.TestName || envOverride || 'Stage';
 
   console.log(`📋 Environment Configuration from Confluence:`);
   for (const row of envConfig) {
@@ -95,14 +106,23 @@ async function stepFetchData() {
   }
   console.log(`\n🎯 Active Environment: ${activeEnvName}`);
 
-  // Build page URL map for the active environment
+  // Build page URL map for the active environment.
+  // IMPORTANT: do NOT fall back to row['Production'] — if the active env cell is
+  // empty we want to know about it, not silently hit prod.
   const pageUrlMap = {};
+  const missingUrlPages = [];
   for (const row of envUrls) {
     if (row.Page) {
-      pageUrlMap[row.Page.toLowerCase()] = row[activeEnvName] || row['Production'] || '';
+      const url = (row[activeEnvName] || '').trim();
+      pageUrlMap[row.Page.toLowerCase()] = url;
+      if (!url) missingUrlPages.push(row.Page);
     }
   }
   console.log(`📋 Resolved ${Object.keys(pageUrlMap).length} page URLs for ${activeEnvName}`);
+  if (missingUrlPages.length > 0) {
+    console.log(`⚠️  No ${activeEnvName} URL configured for: ${missingUrlPages.join(', ')}`);
+    console.log(`   These pages will have an empty URL — add a value in the Confluence Environment URLs table.`);
+  }
 
   // Write to cache so world.js and step definitions can read it
   const cacheDir = path.join(ROOT, '.cache');
@@ -192,6 +212,21 @@ async function stepGenerateAndUploadReports() {
   const { generatePDFForFeature, generatePDF } = await import('./generateReport.js');
   const { uploadReportToConfluence } = await import('./uploadReportToConfluence.js');
 
+  // Propagate active environment name so uploadReportToConfluence targets the
+  // env-specific column (e.g. "Stage Report" / "Production Report").
+  try {
+    const cachePath = path.join(ROOT, '.cache', 'activeEnvironment.json');
+    if (fs.existsSync(cachePath) && !process.env.TARGET_ENVIRONMENT) {
+      const cache = JSON.parse(fs.readFileSync(cachePath, 'utf-8'));
+      if (cache.activeEnvironment) {
+        process.env.TARGET_ENVIRONMENT = cache.activeEnvironment;
+        console.log(`   → Target Confluence column: "${cache.activeEnvironment} Report"`);
+      }
+    }
+  } catch (e) {
+    console.warn(`   ⚠️  Could not read activeEnvironment.json: ${e.message}`);
+  }
+
   // Load the feature filenames that were selected for this run
   const selectedCachePath = path.join(ROOT, '.cache', 'selectedFeatures.json');
   let testedFeatureFiles = [];
@@ -215,12 +250,38 @@ async function stepGenerateAndUploadReports() {
     console.log(`\n📄 Generating report for: ${featureFile}`);
     const result = await generatePDFForFeature(RESULTS_JSON, featureFile);
     if (!result) continue;
-    reports.push(result);
+
+    // ── Special case: the calculator pricing scenario writes its OWN
+    // per-variant PDF to excel-reports/CalculatorPricing_<timestamp>.pdf.
+    // Prefer that artefact over the generic Cucumber TestReport for upload.
+    let uploadPath = result.pdfPath;
+    if (/calculator[_-]?pricing/i.test(featureFile)) {
+      try {
+        const dir = path.join(ROOT, 'excel-reports');
+        const envName = (process.env.TARGET_ENVIRONMENT || '').trim().replace(/[^a-zA-Z0-9]/g, '');
+        const envRe = envName
+          ? new RegExp(`^CalculatorPricing_${envName}_.*\\.pdf$`, 'i')
+          : /^CalculatorPricing(?:_[A-Za-z0-9]+)?_.*\.pdf$/i;
+        let candidates = fs.readdirSync(dir).filter(f => envRe.test(f)).sort();
+        // Fallback to any CalculatorPricing PDF if env-specific not found.
+        if (!candidates.length) {
+          candidates = fs.readdirSync(dir).filter(f => /^CalculatorPricing.*\.pdf$/i.test(f)).sort();
+        }
+        if (candidates.length) {
+          uploadPath = path.join(dir, candidates.at(-1));
+          console.log(`   → Using calculator pricing report: ${path.basename(uploadPath)}`);
+        }
+      } catch (e) {
+        console.warn(`   ⚠️  Could not locate CalculatorPricing PDF: ${e.message}`);
+      }
+    }
+
+    reports.push({ ...result, uploadedPdfPath: uploadPath });
     console.log(`\n📤 Uploading report for: ${featureFile}`);
     const status = (result.stats && typeof result.stats.fail === 'number')
       ? (result.stats.fail === 0 && result.stats.pass > 0 ? 'PASS' : 'FAIL')
       : '';
-    await uploadReportToConfluence(result.pdfPath, [featureFile], status);
+    await uploadReportToConfluence(uploadPath, [featureFile], status);
   }
 
   return reports;

@@ -738,11 +738,16 @@ Before(async function () {
     const testDriveDataKey = Object.keys(allData).find(k => k.toLowerCase().includes('test drive'));
     this.testDriveData = testDriveDataKey ? allData[testDriveDataKey] : [];
 
+    // Load PIM and CPC for MLP - Test Data for PIM scenarios
+    const pimMlpKey = Object.keys(allData).find(k => k.toLowerCase().includes('pim and cpc for mlp'));
+    this.pimTestData = pimMlpKey ? allData[pimMlpKey] : [];
+
     console.log(`📋 Contact Us URL: ${this.contactUsUrl}`);
     console.log(`📋 Contact a Dealer URL: ${this.contactDealerUrl}`);
     console.log(`📋 Contact Us test data rows: ${this.testData.length}`);
     console.log(`📋 Contact a Dealer test data rows: ${this.contactDealerData.length}`);
     console.log(`📋 Test Drive test data rows: ${this.testDriveData.length}`);
+    console.log(`📋 PIM MLP test data rows: ${this.pimTestData.length}`);
   } catch (err) {
     console.error(`⚠️  Failed to load Confluence data: ${err.message}`);
     console.log('   Falling back to Production defaults');
@@ -752,6 +757,7 @@ Before(async function () {
     this.contactDealerUrl = this.pageUrls['contact a dealer'] || 'https://www.hyundai.com/au/en/contact-a-dealer';
     this.testData = [];
     this.contactDealerData = [];
+    this.pimTestData = [];
   }
 });
 
@@ -861,6 +867,11 @@ function findFormSubmissionCall(payloads) {
   // tracking pixels that embed the form page URL in their query parameters.
   const urlPath = (u = '') => { try { const o = new URL(u); return o.origin + o.pathname; } catch { return (u || '').split('?')[0]; } };
 
+  // Explicitly pushed verification XHRs (e.g. PIM variantpricecalc) — always
+  // surface these in the payload panel even if they were GETs.
+  const explicit = payloads.filter(p => p.source && /pim-variantpricecalc|verification/i.test(p.source));
+  if (explicit.length > 0) return explicit[explicit.length - 1];
+
   // First: look for API calls to the same domain (form submissions)
   const formApis = payloads.filter(p =>
     (p.method === 'POST' || p.method === 'PUT') &&
@@ -927,28 +938,46 @@ function buildCombinedHtml(pageScreenshotB64, pageUrl, formApiCall, allPayloads,
         </table>
       </div>`;
 
-    // Build Payload tab
+    // Build Payload tab — request body (if any) AND response body (JSON pretty-printed)
     let reqBody = formApiCall.requestBody || '';
+    let reqBodyHtml = '';
     try {
       const parsed = JSON.parse(reqBody);
-      // Render as key-value pairs like Chrome DevTools
       const entries = Object.entries(parsed);
-      payloadHtml = `
-        <div style="padding:8px 12px;">
-          <div style="font-weight:bold;margin-bottom:8px;font-size:12px;">▼ Request Payload</div>
-          <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:4px;padding:8px;font-family:monospace;font-size:11px;">
-            ${entries.map(([k, v]) => `<div style="padding:2px 0;"><span style="color:#881391;">${esc(k)}</span>: <span style="color:#1a1aa6;">${esc(typeof v === 'string' ? `"${v}"` : JSON.stringify(v))}</span></div>`).join('')}
-          </div>
+      reqBodyHtml = `
+        <div style="font-weight:bold;margin-bottom:8px;font-size:12px;">▼ Request Payload</div>
+        <div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:4px;padding:8px;font-family:monospace;font-size:11px;margin-bottom:12px;">
+          ${entries.map(([k, v]) => `<div style="padding:2px 0;"><span style="color:#881391;">${esc(k)}</span>: <span style="color:#1a1aa6;">${esc(typeof v === 'string' ? `"${v}"` : JSON.stringify(v))}</span></div>`).join('')}
         </div>`;
     } catch {
       if (reqBody) {
-        payloadHtml = `
-          <div style="padding:8px 12px;">
-            <div style="font-weight:bold;margin-bottom:8px;font-size:12px;">▼ Request Payload</div>
-            <pre style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:4px;padding:8px;font-size:11px;white-space:pre-wrap;word-break:break-all;">${esc(reqBody)}</pre>
-          </div>`;
+        reqBodyHtml = `
+          <div style="font-weight:bold;margin-bottom:8px;font-size:12px;">▼ Request Payload</div>
+          <pre style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:4px;padding:8px;font-size:11px;white-space:pre-wrap;word-break:break-all;margin-bottom:12px;">${esc(reqBody)}</pre>`;
       }
     }
+
+    // Render Response body. Pretty-print JSON with key/value colouring
+    // similar to Chrome DevTools Response tab.
+    let respBodyHtml = '';
+    const rawResp = formApiCall.responseBody || '';
+    if (rawResp) {
+      let pretty = rawResp;
+      try { pretty = JSON.stringify(JSON.parse(rawResp), null, 2); } catch { /* leave as-is */ }
+      // Lightweight JSON syntax colouring (keys purple, strings red, numbers/booleans blue)
+      const colored = esc(pretty)
+        .replace(/(&quot;[^&]*?&quot;)(\s*:)/g, '<span style="color:#881391;">$1</span>$2')
+        .replace(/:\s*(&quot;[^&]*?&quot;)/g, ': <span style="color:#c41a16;">$1</span>')
+        .replace(/:\s*(-?\d+\.?\d*)/g, ': <span style="color:#1a1aa6;">$1</span>')
+        .replace(/:\s*(true|false|null)\b/g, ': <span style="color:#1a1aa6;">$1</span>');
+      respBodyHtml = `
+        <div style="font-weight:bold;margin-bottom:8px;font-size:12px;">▼ Response</div>
+        <pre style="background:#fff;border:1px solid #e0e0e0;border-radius:4px;padding:10px;font-size:11px;line-height:1.5;font-family:Consolas,Menlo,monospace;white-space:pre-wrap;word-break:break-word;max-height:520px;overflow:auto;">${colored}</pre>`;
+    }
+
+    payloadHtml = (reqBodyHtml || respBodyHtml)
+      ? `<div style="padding:8px 12px;">${reqBodyHtml}${respBodyHtml}</div>`
+      : '';
   }
 
   const requestCount = `${apiCalls.length} / ${allPayloads.length} requests`;
@@ -1003,12 +1032,12 @@ function buildCombinedHtml(pageScreenshotB64, pageUrl, formApiCall, allPayloads,
 
         <!-- Request detail panel -->
         <div style="flex:1;overflow:auto;">
-          <!-- Tabs: Headers | Payload -->
+          <!-- Tabs: Headers | Payload | Preview | Response -->
           <div style="display:flex;border-bottom:1px solid #e0e0e0;background:#fafafa;">
-            <div style="padding:6px 16px;font-size:11px;color:#1a73e8;font-weight:bold;border-bottom:2px solid #1a73e8;">Headers</div>
-            <div style="padding:6px 16px;font-size:11px;color:#1a73e8;">Payload</div>
+            <div style="padding:6px 16px;font-size:11px;color:#666;">Headers</div>
+            <div style="padding:6px 16px;font-size:11px;color:#666;">Payload</div>
             <div style="padding:6px 16px;font-size:11px;color:#666;">Preview</div>
-            <div style="padding:6px 16px;font-size:11px;color:#666;">Response</div>
+            <div style="padding:6px 16px;font-size:11px;color:#1a73e8;font-weight:bold;border-bottom:2px solid #1a73e8;">Response</div>
           </div>
 
           <!-- Headers content -->

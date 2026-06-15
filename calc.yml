@@ -1,0 +1,551 @@
+- generic [ref=e4]:
+  - banner [ref=e5]:
+    - generic [ref=e7]:
+      - link "Hyundai Logo" [ref=e9] [cursor=pointer]:
+        - /url: /au/en
+        - generic [ref=e10]:
+          - img "hyundai australia website navigation icon" [ref=e11]
+          - text: 
+      - text:  
+      - navigation [ref=e12]:
+        - link "Menu Link" [ref=e14] [cursor=pointer]:
+          - /url: /au/en/cars
+          - text: Models
+        - generic [ref=e15]:
+          - link "Menu Link" [ref=e16] [cursor=pointer]:
+            - /url: "#"
+            - text: Buying
+            - generic [ref=e17]: 
+          - generic [ref=e19]:
+            - list [ref=e21]:
+              - listitem [ref=e22]:
+                - link "Hyundai PREOFYS™ is back! Hyundai PREOFS banner featuring three vehicles on a blue background, showcasing Hyundai’s certified pre-owned vehicle range." [ref=e23] [cursor=pointer]:
+                  - /url: /au/en/offers
+                  - generic [ref=e25]: Hyundai PREOFYS™ is back!
+                  - img "Hyundai PREOFS banner featuring three vehicles on a blue background, showcasing Hyundai’s certified pre-owned vehicle range." [ref=e28]
+              - listitem [ref=e29]:
+                - link "Build & Price hyundai australia website navigation icon" [ref=e30] [cursor=pointer]:
+                  - /url: /au/en/shop/calculator
+                  - generic [ref=e32]: Build & Price
+                  - img "hyundai australia website navigation icon" [ref=e35]
+              - listitem [ref=e36]:
+                - link "Test Drive hyundai australia website navigation icon" [ref=e37] [cursor=pointer]:
+                  - /url: /au/en/book-a-test-drive
+                  - generic [ref=e39]: Test Drive
+                  - img "hyundai australia website navigation icon" [ref=e42]
+              - listitem [ref=e43]:
+                - link "Hyundai Guaranteed Future Value hyundai australia website navigation icon" [ref=e44] [cursor=pointer]:
+                  - /url: /au/en/shop/guaranteed-future-value
+                  - generic [ref=e46]: Hyundai Guaranteed Future Value
+                  - img "hyundai australia website navigation icon" [ref=e49]
+              - listitem [ref=e50]:
+                - link "Novated Lease hyundai australia website navigation icon" [ref=e51] [cursor=pointer]:
+                  - /url: /au/en/shop/novated-lease
+                  - generic [ref=e53]: Novated Lease
+                  - img "hyundai australia website navigation icon" [ref=e56]
+            - generic [ref=e57]:
+              - generic [ref=e58]: Shop
+              - navigation [ref=e59]:
+                - link "Accessories" [ref=e60] [cursor=pointer]:
+                  - /url: /au/en/owning/accessories
+                - link "XRT Option Packs" [ref=e61] [cursor=pointer]:
+                  - /url: /au/en/shop/xrt
+                - link "Certified Pre-Owned" [ref=e62] [cursor=pointer]:
+                  - /url: /au/en/hyundai-promise
+                - link "N Merchandise" [ref=e63] [cursor=pointer]:
+                  - /url: /au/en/owning/accessories/pitstop
+                - link "Latest Offers" [ref=e64] [cursor=pointer]:
+                  - /url: /au/en/offers
+            - generic [ref=e65]:
+              - generic [ref=e66]: Services
+              - navigation [ref=e67]:
+                - link "Hyundai Finance®" [ref=e68] [cursor=pointer]:
+                  - /url: /au/en/shop/loan-calculator
+                - link "Hyundai Insurance" [ref=e69] [cursor=pointer]:
+                  - /url: /au/en/shop/hyundai-insurance
+                - link "Pre-paid Service plan" [ref=e70] [cursor=pointer]:
+                  - /url: /au/en/owning/servicing/pre-paid
+                - link "Business Fleet" [ref=e71] [cursor=pointer]:
+                  - /url: /au/en/fleet
+        - link "Menu Link" [ref=e73] [cursor=pointer]:
+          - /url: /au/en/offers
+          - text: Offers
+        - generic [ref=e74]:
+          - link "Menu Link" [ref=e75] [cursor=pointer]:
+            - /url: "#"
+            - text: Owning
+            - generic [ref=e76]: 
+          - generic [ref=e78]:
+            - list [ref=e80]:
+              - listitem [ref=e81]:
+                - link "Visit N Australia to discover exclusive events for N owners. Tas_N_Club_Track_Day_left_margin_gradient.png" [ref=e82] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai/performance/n-australia
+                  - generic [ref=e84]: Visit N Australia to discover exclusive events for N owners.
+                  - img "Tas_N_Club_Track_Day_left_margin_gradient.png" [ref=e87]
+              - listitem [ref=e88]:
+                - link "Book a Service White spanner logo on a transparnt background representing Hyundai book a service" [ref=e89] [cursor=pointer]:
+                  - /url: /au/en/find-a-dealer#service.html
+                  - generic [ref=e91]: Book a Service
+                  - img "White spanner logo on a transparnt background representing Hyundai book a service" [ref=e94]
+              - listitem [ref=e95]:
+                - link "Ownership Benefits myHyundaiCare Logo" [ref=e96] [cursor=pointer]:
+                  - /url: /au/en/owning/myhyundaicare
+                  - generic [ref=e98]: Ownership Benefits
+                  - img "myHyundaiCare Logo" [ref=e101]
+              - listitem [ref=e102]:
+                - link "Roadside Support Hyundai KONA front view highlighting roadside assistance and ownership support benefits." [ref=e103] [cursor=pointer]:
+                  - /url: /au/en/owning/myhyundaicare/roadside-support
+                  - generic [ref=e105]: Roadside Support
+                  - img "Hyundai KONA front view highlighting roadside assistance and ownership support benefits." [ref=e108]
+              - listitem [ref=e109]:
+                - link "7 Year Warranty Warranty_Logo_Megamenu_260x200.png" [ref=e110] [cursor=pointer]:
+                  - /url: /au/en/owning/myhyundaicare/warranty
+                  - generic [ref=e112]: 7 Year Warranty
+                  - img "Warranty_Logo_Megamenu_260x200.png" [ref=e115]
+            - generic [ref=e116]:
+              - generic [ref=e117]: Know Your Hyundai
+              - navigation [ref=e118]:
+                - link "Accessories" [ref=e119] [cursor=pointer]:
+                  - /url: /au/en/owning/accessories
+                - link "Towing" [ref=e120] [cursor=pointer]:
+                  - /url: /au/en/towing
+                - link "Bluelink ™" [ref=e121] [cursor=pointer]:
+                  - /url: /au/en/owning/bluelink
+                - link "Digital Key" [ref=e122] [cursor=pointer]:
+                  - /url: /au/en/owning/digital-key
+                - link "Sat Nav Updates" [ref=e123] [cursor=pointer]:
+                  - /url: /au/en/owning/myhyundaicare/sat-nav-plan
+                - link "OTA Software Updates" [ref=e124] [cursor=pointer]:
+                  - /url: /au/en/owning/ota-updates
+                - link "XRT Option Packs" [ref=e125] [cursor=pointer]:
+                  - /url: /au/en/shop/xrt
+            - generic [ref=e126]:
+              - generic [ref=e127]: Support
+              - navigation [ref=e128]:
+                - link "Genuine Service" [ref=e129] [cursor=pointer]:
+                  - /url: /au/en/owning/servicing
+                - link "Customer Care" [ref=e130] [cursor=pointer]:
+                  - /url: /au/en/customer-care
+                - link "Safety Recalls" [ref=e131] [cursor=pointer]:
+                  - /url: /au/en/owning/safety-recalls
+        - link "Menu Link" [ref=e133] [cursor=pointer]:
+          - /url: /au/en/fleet
+          - text: Business
+        - generic [ref=e134]:
+          - link "Menu Link" [ref=e135] [cursor=pointer]:
+            - /url: "#"
+            - text: About
+            - generic [ref=e136]: 
+          - generic [ref=e138]:
+            - list [ref=e140]:
+              - listitem [ref=e141]:
+                - link "Two Electrics. Two Hybrids. One Epic journey. Four hyundai cars on a rugged terrain" [ref=e142] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e144]: Two Electrics. Two Hybrids. One Epic journey.
+                  - img "Four hyundai cars on a rugged terrain" [ref=e147]
+              - listitem [ref=e148]:
+                - link "Why Hyundai hyundai australia website navigation icon" [ref=e149] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai
+                  - generic [ref=e151]: Why Hyundai
+                  - img "hyundai australia website navigation icon" [ref=e154]
+              - listitem [ref=e155]:
+                - link "News hyundai australia website navigation icon" [ref=e156] [cursor=pointer]:
+                  - /url: /au/en/news
+                  - generic [ref=e158]: News
+                  - img "hyundai australia website navigation icon" [ref=e161]
+              - listitem [ref=e162]:
+                - link "Awards hyundai australia website navigation icon" [ref=e163] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai/Awards
+                  - generic [ref=e165]: Awards
+                  - img "hyundai australia website navigation icon" [ref=e168]
+              - listitem [ref=e169]:
+                - link "Contact us hyundai australia website navigation icon" [ref=e170] [cursor=pointer]:
+                  - /url: /au/en/customer-care/contact-us
+                  - generic [ref=e172]: Contact us
+                  - img "hyundai australia website navigation icon" [ref=e175]
+            - generic [ref=e176]:
+              - generic [ref=e177]: Connect
+              - navigation [ref=e178]:
+                - link "Hyundai Help for Kids" [ref=e179] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai/community/hyundai-help-for-kids
+                - link "Sponsorships" [ref=e180] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai/sponsorships
+                - link "Corporate Partners" [ref=e181] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai/corporate-partnerships
+                - link "Careers" [ref=e182] [cursor=pointer]:
+                  - /url: /au/en/hyundai-info/careers
+            - generic [ref=e183]:
+              - generic [ref=e184]: Explore
+              - navigation [ref=e185]:
+                - link "Hybrid" [ref=e186] [cursor=pointer]:
+                  - /url: /au/en/cars/hybrid
+                - link "Electric" [ref=e187] [cursor=pointer]:
+                  - /url: /au/en/cars/eco
+                - link "Motorsports" [ref=e188] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai/performance/hyundai-motorsports
+                - link "Concept Cars" [ref=e189] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai/concept-cars
+                - link "N Australia" [ref=e190] [cursor=pointer]:
+                  - /url: /au/en/why-hyundai/performance/n-australia
+      - navigation [ref=e191]:
+        - list [ref=e192]:
+          - listitem [ref=e193]:
+            - link " Find a dealer" [ref=e194] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e195]: 
+              - generic [ref=e196]: Find a dealer
+          - listitem [ref=e197]:
+            - link "" [ref=e198] [cursor=pointer]:
+              - /url: /au/en/find-a-dealer
+              - generic [ref=e199]: 
+          - listitem [ref=e200]:
+            - link "" [ref=e201] [cursor=pointer]:
+              - /url: /au/en/customer-care
+              - generic [ref=e202]: 
+          - listitem [ref=e203]:
+            - link "Search" [ref=e204] [cursor=pointer]:
+              - /url: /au/en/search
+              - generic [ref=e205]: 
+            - text: 
+            - generic [ref=e207]:
+              - list [ref=e209]:
+                - listitem [ref=e210]:
+                  - link "Quote & Book Service" [ref=e211] [cursor=pointer]:
+                    - /url: /au/en/find-a-dealer#service.html
+                    - generic [ref=e213]: Quote & Book Service
+                    - img "hyundai australia website navigation icon" [ref=e214]
+                - listitem [ref=e215]:
+                  - link "Hyundai CarPlan®" [ref=e216] [cursor=pointer]:
+                    - /url: /au/en/shop/carplan
+                    - generic [ref=e218]: Hyundai CarPlan®
+                    - img "hyundai australia website navigation icon" [ref=e219]
+                - listitem [ref=e220]:
+                  - link "Hyundai Accessories" [ref=e221] [cursor=pointer]:
+                    - /url: /au/en/owning/accessories
+                    - generic [ref=e223]: Hyundai Accessories
+                    - img "hyundai australia website navigation icon" [ref=e224]
+              - generic [ref=e226]:
+                - text: Popular searches
+                - generic [ref=e227]:
+                  - link "Hybrid" [ref=e228] [cursor=pointer]:
+                    - /url: /au/en/search?search=Hybrid
+                  - link "Accessories" [ref=e229] [cursor=pointer]:
+                    - /url: /au/en/search?search=Accessories
+                  - link "Recall" [ref=e230] [cursor=pointer]:
+                    - /url: /au/en/search?search=Recall
+                  - link "I30" [ref=e231] [cursor=pointer]:
+                    - /url: /au/en/search?search=I30
+                  - link "Service" [ref=e232] [cursor=pointer]:
+                    - /url: /au/en/search?search=Service
+                  - link "Electric" [ref=e233] [cursor=pointer]:
+                    - /url: /au/en/search?search=Electric
+    - text:          
+  - main [ref=e234]:
+    - generic [ref=e237]:
+      - generic [ref=e241]:
+        - generic [ref=e242]:
+          - generic [ref=e243]: Configure your Hyundai.
+          - generic [ref=e244]: Configure your car to your lifestyle and get a quote. Start by selecting your model.
+        - list [ref=e247]:
+          - listitem [ref=e248]:
+            - paragraph [ref=e249] [cursor=pointer]: All
+          - listitem [ref=e250]:
+            - paragraph [ref=e251] [cursor=pointer]: Electric
+          - listitem [ref=e252]:
+            - paragraph [ref=e253] [cursor=pointer]: Hybrid
+          - listitem [ref=e254]:
+            - paragraph [ref=e255] [cursor=pointer]: SUVs and People Movers
+          - listitem [ref=e256]:
+            - paragraph [ref=e257] [cursor=pointer]: Performance
+          - listitem [ref=e258]:
+            - paragraph [ref=e259] [cursor=pointer]: Hatch and Sedan
+          - listitem [ref=e260]:
+            - paragraph [ref=e261] [cursor=pointer]: Vans and Trucks
+          - listitem [ref=e262]
+        - generic [ref=e265]:
+          - link "ELEXIO ELEXIO." [ref=e267] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/elexio
+            - generic [ref=e268]:
+              - img "ELEXIO" [ref=e269]
+              - heading "ELEXIO." [level=5] [ref=e272]
+          - link "IONIQ 6 N IONIQ 6 N." [ref=e274] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/ioniq-6-n
+            - generic [ref=e275]:
+              - img "IONIQ 6 N" [ref=e276]
+              - heading "IONIQ 6 N." [level=5] [ref=e279]
+          - link "VENUE VENUE." [ref=e281] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/venue
+            - generic [ref=e282]:
+              - img "VENUE" [ref=e283]
+              - heading "VENUE." [level=5] [ref=e286]
+          - link "i20 N i20 N." [ref=e288] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/i20-n
+            - generic [ref=e289]:
+              - img "i20 N" [ref=e290]
+              - heading "i20 N." [level=5] [ref=e293]
+          - link "INSTER INSTER." [ref=e295] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/inster
+            - generic [ref=e296]:
+              - img "INSTER" [ref=e297]
+              - heading "INSTER." [level=5] [ref=e300]
+          - link "i30 N i30 N." [ref=e302] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/i30-n
+            - generic [ref=e303]:
+              - img "i30 N" [ref=e304]
+              - heading "i30 N." [level=5] [ref=e307]
+          - link "i30 Sedan N i30 Sedan N." [ref=e309] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/i30-sedan-n
+            - generic [ref=e310]:
+              - img "i30 Sedan N" [ref=e311]
+              - heading "i30 Sedan N." [level=5] [ref=e314]
+          - link "KONA KONA." [ref=e316] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/kona
+            - generic [ref=e317]:
+              - img "KONA" [ref=e318]
+              - heading "KONA." [level=5] [ref=e321]
+          - link "SANTA FE SANTA FE." [ref=e323] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/santa-fe
+            - generic [ref=e324]:
+              - img "SANTA FE" [ref=e325]
+              - heading "SANTA FE." [level=5] [ref=e328]
+          - link "TUCSON TUCSON." [ref=e330] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/tucson
+            - generic [ref=e331]:
+              - img "TUCSON" [ref=e332]
+              - heading "TUCSON." [level=5] [ref=e335]
+          - link "IONIQ 5 N IONIQ 5 N." [ref=e337] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/ioniq-5-n
+            - generic [ref=e338]:
+              - img "IONIQ 5 N" [ref=e339]
+              - heading "IONIQ 5 N." [level=5] [ref=e342]
+          - link "IONIQ 5 IONIQ 5." [ref=e344] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/ioniq-5
+            - generic [ref=e345]:
+              - img "IONIQ 5" [ref=e346]
+              - heading "IONIQ 5." [level=5] [ref=e349]
+          - link "PALISADE PALISADE." [ref=e351] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/palisade
+            - generic [ref=e352]:
+              - img "PALISADE" [ref=e353]
+              - heading "PALISADE." [level=5] [ref=e356]
+          - link "SONATA N Line SONATA N Line." [ref=e358] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/sonata-n-line
+            - generic [ref=e359]:
+              - img "SONATA N Line" [ref=e360]
+              - heading "SONATA N Line." [level=5] [ref=e363]
+          - link "STARIA STARIA." [ref=e365] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/staria
+            - generic [ref=e366]:
+              - img "STARIA" [ref=e367]
+              - heading "STARIA." [level=5] [ref=e370]
+          - link "STARIA Load STARIA Load." [ref=e372] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/staria-load
+            - generic [ref=e373]:
+              - img "STARIA Load" [ref=e374]
+              - heading "STARIA Load." [level=5] [ref=e377]
+          - link "IONIQ 9 IONIQ 9." [ref=e379] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/ioniq-9
+            - generic [ref=e380]:
+              - img "IONIQ 9" [ref=e381]
+              - heading "IONIQ 9." [level=5] [ref=e384]
+          - link "i30 i30 Sedan." [ref=e386] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/i30
+            - generic [ref=e387]:
+              - img "i30" [ref=e388]
+              - heading "i30 Sedan." [level=5] [ref=e391]
+          - link "i30 i30 N Line." [ref=e393] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/i30
+            - generic [ref=e394]:
+              - img "i30" [ref=e395]
+              - heading "i30 N Line." [level=5] [ref=e398]
+          - link "KONA KONA Electric." [ref=e400] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/kona
+            - generic [ref=e401]:
+              - img "KONA" [ref=e402]
+              - heading "KONA Electric." [level=5] [ref=e405]
+          - link "i30 i30 Sedan Hybrid." [ref=e407] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/i30
+            - generic [ref=e408]:
+              - img "i30" [ref=e409]
+              - heading "i30 Sedan Hybrid." [level=5] [ref=e412]
+          - link "KONA KONA Hybrid." [ref=e414] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/kona
+            - generic [ref=e415]:
+              - img "KONA" [ref=e416]
+              - heading "KONA Hybrid." [level=5] [ref=e419]
+          - link "TUCSON TUCSON Hybrid." [ref=e421] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/tucson
+            - generic [ref=e422]:
+              - img "TUCSON" [ref=e423]
+              - heading "TUCSON Hybrid." [level=5] [ref=e426]
+          - link "i30 IONIQ 5 N Line." [ref=e428] [cursor=pointer]:
+            - /url: /au/en/shop/calculator/i30
+            - generic [ref=e429]:
+              - img "i30" [ref=e430]
+              - heading "IONIQ 5 N Line." [level=5] [ref=e433]
+      - generic [ref=e434]:
+        - heading "Disclaimers" [level=3] [ref=e443]
+        - generic [ref=e455]:
+          - paragraph [ref=e456]: "[H1] 7 Year Unlimited Km Warranty"
+          - paragraph [ref=e457]:
+            - text: In addition to the 5 Year Standard New Car Warranty, Hyundai provides an extended warranty for up to a further 2 years, when all servicing is with Hyundai, on passenger vehicles first registered from June 1, 2025. Maximum warranty is 7 years from date of first registration, on the condition that all scheduled services are completed within the specified service intervals at an authorised Hyundai dealer. Otherwise, the standard 5 year unlimited km warranty (from the date of first registration) applies. Service conditions apply. Excludes Hybrid & EV drive batteries, which are warranted for 8 years / 160,000km (whichever occurs first) from the date of first registration. Does not apply if the vehicle is used at any time during the warranty period used for a “commercial application” as defined in the warranty policy, which includes use as a taxi, hire, ride-share, rental, courier, delivery, security, driving school, tour, bus operator or emergency vehicle, or any other use in the course of trade for the purpose of carrying passengers or goods. Passenger vehicles used for a commercial application are provided with a 5 year/130,000km warranty (whichever occurs first). People Mover Vans used for a commercial application are provided with a 5 year/160,000km warranty (whichever occurs first). Commercial Vans are provided with a 5 year/160,000km warranty (whichever occurs first) regardless of its usage. Terms, conditions and exclusions apply, view the
+            - link "Warranty page" [ref=e459] [cursor=pointer]:
+              - /url: /au/en/owning/myhyundaicare/warranty
+            - text: .
+          - paragraph [ref=e460]: "[H2] Genuine Service Plan"
+          - paragraph [ref=e461]:
+            - text: For the benefit of Hyundai owners, Hyundai provides online quotes, which specify the maximum price applicable for a vehicle's next scheduled maintenance service at a participating authorised Hyundai dealer and using Hyundai Genuine Parts (where required). Online quotes are available at www.hyundai.com/au/en/find-a-dealer#service apply for a stated effective period only and may change after that effective period without notice. Standard scheduled maintenance services are of limited scope. The benefit of online quotes is available for all Hyundai's, for their lifetime. To see the full terms and conditions of the Hyundai Genuine Service Plan Program, please visit
+            - link "hyundai.com/au/en/owning/servicing" [ref=e463] [cursor=pointer]:
+              - /url: /au/en/owning/servicing
+            - text: .
+          - paragraph [ref=e464]: "[H3] Premium Roadside Support Plan"
+          - paragraph [ref=e465]: 12 months included Premium Roadside Support when you buy a new Hyundai internal combustion engine or hybrid vehicle from a participating authorised Hyundai Dealer. For purchases from a participating authorised Hyundai Dealer of new Hyundai battery electric vehicle Hyundai offers 24 months included Premium Roadside Support. Premium Roadside Support commences from the date of the vehicle’s warranty commencement.
+          - paragraph [ref=e466]:
+            - text: When you have your Hyundai internal combustion engine or hybrid vehicle’s scheduled service completed at a participating authorised Hyundai Dealer, you will receive 12 months of included Premium Roadside Support from the date of service. For Hyundai battery electric vehicles, that have their scheduled service completed at a participating authorised Hyundai Dealer, you will receive 24 months of included Premium Roadside Support from the date of service. Available for all Hyundai vehicles (excluding rental buyers and taxis). Terms, conditions and exclusions apply, visit
+            - link "hyundai.com/au/en/owning/myhyundaicare/roadside-support" [ref=e468] [cursor=pointer]:
+              - /url: /au/en/owning/myhyundaicare/roadside-support
+            - text: .
+          - paragraph [ref=e469]: "[H4] Sat Nav Update Plan"
+          - paragraph [ref=e470]:
+            - text: Applies to new Hyundai vehicles with both 8” and 10.25” factory-fitted satellite navigation. Updates are delivered annually and are included if the vehicle completes a scheduled service at an authorised Hyundai Dealer. Updates must be undertaken within 10 years of the vehicle’s first registration date, with a maximum number of 9 updates. Visit
+            - link "hyundai.com/au/en/owning/myhyundaicare/sat-nav-plan" [ref=e472] [cursor=pointer]:
+              - /url: /au/en/owning/myhyundaicare/sat-nav-plan
+            - text: for full terms and conditions.
+        - generic [ref=e476]:
+          - link " Build & Price" [ref=e477] [cursor=pointer]:
+            - /url: /au/en/shop/calculator
+            - generic [ref=e478]: 
+            - generic [ref=e479]: Build & Price
+          - link " Find a dealer" [ref=e482] [cursor=pointer]:
+            - /url: /au/en/find-a-dealer
+            - generic [ref=e483]: 
+            - generic [ref=e484]: Find a dealer
+          - link " test drive" [ref=e487] [cursor=pointer]:
+            - /url: /au/en/book-a-test-drive
+            - generic [ref=e488]: 
+            - generic [ref=e489]: test drive
+          - link " Quote & Book a Service" [ref=e492] [cursor=pointer]:
+            - /url: /au/en/find-a-dealer#service
+            - generic [ref=e493]: 
+            - generic [ref=e494]: Quote & Book a Service
+  - contentinfo [ref=e502]:
+    - generic [ref=e504]:
+      - link "Hyundai Motor Company Australia" [ref=e506] [cursor=pointer]:
+        - /url: https://www.hyundai.com/au/en
+        - img "Hyundai Motor Company Australia Logo" [ref=e507]
+      - navigation [ref=e508]:
+        - link "" [ref=e509] [cursor=pointer]:
+          - /url: https://www.facebook.com/HyundaiAustralia/
+          - generic [ref=e510]: 
+        - link "" [ref=e511] [cursor=pointer]:
+          - /url: http://twitter.com/hyundaiaus
+          - generic [ref=e512]: 
+        - link "" [ref=e513] [cursor=pointer]:
+          - /url: http://www.youtube.com/user/ChannelHyundai#p/u
+          - generic [ref=e514]: 
+        - link "" [ref=e515] [cursor=pointer]:
+          - /url: http://instagram.com/hyundaiaus?ref=badge
+          - generic [ref=e516]: 
+        - link "" [ref=e517] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/hyundai-motor-company/
+          - generic [ref=e518]: 
+        - link "" [ref=e519] [cursor=pointer]:
+          - /url: https://www.tiktok.com/@hyundaiaustralia?lang=en
+          - generic [ref=e520]: 
+    - generic [ref=e522]:
+      - generic [ref=e523]:
+        - generic [ref=e524]:
+          - heading "Hyundai Range" [level=2] [ref=e526]
+          - navigation "Hyundai Range" [ref=e527]:
+            - generic [ref=e528]:
+              - link "Electric" [ref=e529] [cursor=pointer]:
+                - /url: /au/en/cars/eco
+              - link "Hybrid" [ref=e530] [cursor=pointer]:
+                - /url: /au/en/cars/hybrid
+              - link "SUV" [ref=e531] [cursor=pointer]:
+                - /url: /au/en/cars/suvs
+              - link "Performance" [ref=e532] [cursor=pointer]:
+                - /url: /au/en/cars/sports-cars
+              - link "Hatch and Sedan" [ref=e533] [cursor=pointer]:
+                - /url: /au/en/cars/small-cars
+              - link "Vans and Trucks" [ref=e534] [cursor=pointer]:
+                - /url: /au/en/cars/people-movers-and-commercial
+        - generic [ref=e535]:
+          - heading "Latest offers" [level=2] [ref=e537]
+          - navigation "Latest offers" [ref=e538]:
+            - link "View latest offers" [ref=e540] [cursor=pointer]:
+              - /url: /au/en/offers
+      - generic [ref=e542]:
+        - heading "Buying Tools" [level=2] [ref=e544]
+        - navigation "Buying Tools" [ref=e545]:
+          - generic [ref=e546]:
+            - link "Price a car" [ref=e547] [cursor=pointer]:
+              - /url: /au/en/shop/calculator
+            - link "Guaranteed Future Value" [ref=e548] [cursor=pointer]:
+              - /url: /au/en/shop/guaranteed-future-value
+            - link "Fleet" [ref=e549] [cursor=pointer]:
+              - /url: /au/en/fleet
+            - link "Find a dealer" [ref=e550] [cursor=pointer]:
+              - /url: /au/en/find-a-dealer
+            - link "Test Drive" [ref=e551] [cursor=pointer]:
+              - /url: /au/en/book-a-test-drive
+            - link "Car accessories" [ref=e552] [cursor=pointer]:
+              - /url: /au/en/owning/accessories
+            - link "Corporate partnerships" [ref=e553] [cursor=pointer]:
+              - /url: /au/en/why-hyundai/corporate-partnerships
+      - generic [ref=e555]:
+        - heading "Ownership" [level=2] [ref=e557]
+        - navigation "Ownership" [ref=e558]:
+          - generic [ref=e559]:
+            - link "Servicing" [ref=e560] [cursor=pointer]:
+              - /url: /au/en/owning/servicing
+            - link "myHyundaiCare benefits" [ref=e561] [cursor=pointer]:
+              - /url: /au/en/owning/myhyundaicare
+            - link "7 Year Warranty" [ref=e562] [cursor=pointer]:
+              - /url: /au/en/owning/myhyundaicare/warranty
+            - link "Sat Nav Update" [ref=e563] [cursor=pointer]:
+              - /url: https://update.hyundai.com/AU/EN/Main
+            - link "Quote & Book a Service" [ref=e564] [cursor=pointer]:
+              - /url: /au/en/find-a-dealer#service.html
+            - link "Recalls" [ref=e565] [cursor=pointer]:
+              - /url: /au/en/owning/safety-recalls
+            - link "Emergency response guides" [ref=e566] [cursor=pointer]:
+              - /url: /au/en/cars/eco/ev-emergency-response
+            - link "Customer Charter" [ref=e567] [cursor=pointer]:
+              - /url: /au/en/customer-care/customer-charter
+      - generic [ref=e569]:
+        - heading "About Hyundai" [level=2] [ref=e571]
+        - navigation "About Hyundai" [ref=e572]:
+          - generic [ref=e573]:
+            - link "Why Hyundai" [ref=e574] [cursor=pointer]:
+              - /url: /au/en/why-hyundai
+            - link "Subscribe" [ref=e575] [cursor=pointer]:
+              - /url: /au/en/subscribe
+            - link "News" [ref=e576] [cursor=pointer]:
+              - /url: /au/en/why-hyundai/news
+            - link "Sponsorship" [ref=e577] [cursor=pointer]:
+              - /url: /au/en/why-hyundai/sponsorships
+            - link "Careers" [ref=e578] [cursor=pointer]:
+              - /url: /au/en/hyundai-info/careers
+            - link "Hyundai Help for Kids" [ref=e579] [cursor=pointer]:
+              - /url: /au/en/why-hyundai/community/hyundai-help-for-kids
+      - link " Contact us" [ref=e581] [cursor=pointer]:
+        - /url: /au/en/customer-care
+        - generic [ref=e582]: 
+        - generic [ref=e583]: Contact us
+    - generic [ref=e585]:
+      - list [ref=e586]:
+        - listitem [ref=e587]:
+          - link "SITEMAP" [ref=e588] [cursor=pointer]:
+            - /url: /au/en/sitemap
+        - listitem [ref=e589]:
+          - link "PRIVACY" [ref=e590] [cursor=pointer]:
+            - /url: /au/en/privacy
+        - listitem [ref=e591]:
+          - link "MODERN SLAVERY STATEMENT" [ref=e592] [cursor=pointer]:
+            - /url: /au/en/modern-slavery-statement
+        - listitem [ref=e593]:
+          - link "DISCLAIMER" [ref=e594] [cursor=pointer]:
+            - /url: /au/en/disclaimer
+      - paragraph [ref=e595]:
+        - generic [ref=e596]: © 2026 Copyright Hyundai Motor Company, Australia Pty Limited

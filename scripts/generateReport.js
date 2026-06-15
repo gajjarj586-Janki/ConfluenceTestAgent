@@ -71,6 +71,36 @@ function findLatestScenarioScreenshot(scenarioName, featureName) {
   return '';
 }
 
+// Auxiliary screenshots saved by step definitions (e.g. PIM Variant Pricing
+// page captured during the MLP verification scenario, or ROAP Driveaway
+// page captured during the driveaway-price verification scenario).
+// `kind` scopes the lookup to one source ('pim' or 'roap') so each report
+// only includes its own auxiliary screenshots.
+function findAuxiliaryScreenshots(kind) {
+  if (!fs.existsSync(SCREENSHOTS_DIR)) return [];
+  const allSources = {
+    pim:  { re: /^pim-Variant_Pricing-(.+)-\d{4}-\d{2}-\d{2}T/i, label: (k) => `PIM Variant Pricing (${k})` },
+    roap: { re: /^roap-Driveaway-(.+)-\d{4}-\d{2}-\d{2}T/i,      label: (k) => `ROAP Driveaway (${k})` },
+  };
+  const sources = kind && allSources[kind] ? [allSources[kind]] : Object.values(allSources);
+  const files = fs.readdirSync(SCREENSHOTS_DIR)
+    .filter((f) => /\.png$/i.test(f))
+    .sort((left, right) => right.localeCompare(left));
+  const out = [];
+  const seen = new Set();
+  for (const f of files) {
+    for (const src of sources) {
+      const m = f.match(src.re);
+      if (!m) continue;
+      if (seen.has(m[1])) break;
+      seen.add(m[1]);
+      out.push({ label: src.label(m[1]), path: path.join(SCREENSHOTS_DIR, f) });
+      break;
+    }
+  }
+  return out;
+}
+
 function findLatestPayloadScreenshot(scenarioName, featureName) {
   if (!fs.existsSync(SCREENSHOTS_DIR)) {
     return '';
@@ -347,6 +377,12 @@ function flattenResults(cucumberJson) {
         errorSummary: errorSummary.summary,
         errorDetail: errorSummary.detail,
         screenshotPath: findLatestScenarioScreenshot(scenario.name || 'Unnamed Scenario', featureFileKey),
+        extraScreenshots: (() => {
+          const name = scenario.name || '';
+          if (/Drive\s*-?\s*away|Driveaway|ROAP/i.test(name)) return findAuxiliaryScreenshots('roap');
+          if (/Manufacturer\s+List\s+Price/i.test(name))     return findAuxiliaryScreenshots('pim');
+          return [];
+        })(),
         testUrl,
         successMessage,
         apiStatusCode,
@@ -409,16 +445,29 @@ function buildHTML(cases, stats) {
       .replace(/\n/g, '<br>');
 
   const renderScreenshotCell = (caseData) => {
-    if (!caseData.screenshotPath) {
+    const parts = [];
+    if (caseData.screenshotPath) {
+      const imageUrl = pathToFileURL(caseData.screenshotPath).href;
+      parts.push(`
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#1F3864;font-weight:bold;">Consumer site</div>
+          <img src="${imageUrl}" alt="${escapeHtml(caseData.scenario)} screenshot" style="width:320px;max-height:200px;object-fit:contain;border:1px solid #CCD3E0;border-radius:4px;" />
+          <div style="font-size:8px;color:#555;word-break:break-all;">${escapeHtml(path.basename(caseData.screenshotPath))}</div>
+        </div>`);
+    }
+    for (const extra of (caseData.extraScreenshots || [])) {
+      const imageUrl = pathToFileURL(extra.path).href;
+      parts.push(`
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:9px;color:#1F3864;font-weight:bold;">${escapeHtml(extra.label)}</div>
+          <img src="${imageUrl}" alt="${escapeHtml(extra.label)}" style="width:320px;max-height:200px;object-fit:contain;border:1px solid #CCD3E0;border-radius:4px;" />
+          <div style="font-size:8px;color:#555;word-break:break-all;">${escapeHtml(path.basename(extra.path))}</div>
+        </div>`);
+    }
+    if (parts.length === 0) {
       return '<div style="color:#777;">No screenshot captured</div>';
     }
-
-    const imageUrl = pathToFileURL(caseData.screenshotPath).href;
-    return `
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <img src="${imageUrl}" alt="${escapeHtml(caseData.scenario)} screenshot" style="width:320px;max-height:200px;object-fit:contain;border:1px solid #CCD3E0;border-radius:4px;" />
-        <div style="font-size:8px;color:#555;word-break:break-all;">${escapeHtml(path.basename(caseData.screenshotPath))}</div>
-      </div>`;
+    return `<div style="display:flex;flex-direction:column;gap:8px;">${parts.join('')}</div>`;
   };
 
   const renderPayloadCell = (caseData) => {

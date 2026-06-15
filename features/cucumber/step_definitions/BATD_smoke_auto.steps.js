@@ -106,6 +106,12 @@ Given('the user has loaded the test data from the confluence page {string} and f
       }
     }
     console.log(`📋 Footer Subscribe data loaded: ${this.footerSubscribeData.length} row(s)${this._footerSubscribeUrl ? ', URL: ' + this._footerSubscribeUrl : ''}`);
+  } else if (sheetLower.includes('pim') || sheetLower.includes('mlp') || sheetLower.includes('cpc')) {
+    // PIM / CPC / MLP test data (Vehicle, Variant, CPC URL)
+    this.pimTestData = data.length > 0 ? data : this.pimTestData || [];
+    assert.ok(this.pimTestData && this.pimTestData.length > 0,
+      `PIM/CPC test data should be loaded from Confluence page "${pageName}" sheet "${sheetName}"`);
+    console.log(`📋 PIM/CPC data loaded: ${this.pimTestData.length} row(s), keys: ${Object.keys(this.pimTestData[0] || {}).join(', ')}`);
   } else if (sheetLower.includes('book a service') || sheetLower.includes('book-a-service')) {
     // Book a Service test data (Rego, State, Model, Vin, Postcode)
     let _basRows = data.length > 0 ? data : (this.bookAServiceData || []);

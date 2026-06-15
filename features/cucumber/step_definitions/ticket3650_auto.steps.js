@@ -13,8 +13,31 @@
  */
 import { Given, When, Then } from '@cucumber/cucumber';
 import { strict as assert } from 'node:assert';
+import fs from 'node:fs';
+import path from 'node:path';
+import { authenticatePim } from '../../../utils/pimAuth.js';
 
-Given('user navigates to {string}', async function (url) {
+// Resolve a feature-file argument to a real URL.
+// Accepts either a literal URL ("https://...") or a named page from the
+// Confluence "Environment URLs" sheet (cached in .cache/activeEnvironment.json
+// by scripts/agentOrchestrator.js).
+function resolveNamedUrl(arg) {
+  if (/^https?:\/\//i.test(arg)) return arg;
+  try {
+    const cachePath = path.resolve('.cache', 'activeEnvironment.json');
+    if (!fs.existsSync(cachePath)) return arg;
+    const env = JSON.parse(fs.readFileSync(cachePath, 'utf-8'));
+    const map = env.pageUrls || {};
+    const key = arg.toLowerCase().trim();
+    if (map[key]) return map[key];
+    // tolerant match: any page whose name contains the arg or vice versa
+    const hit = Object.entries(map).find(([k]) => k.includes(key) || key.includes(k));
+    if (hit && hit[1]) return hit[1];
+  } catch { /* ignore */ }
+  return arg;
+}
+
+Given('user navigates to {string}', async function (target) {
   // Setup network intercept listeners (captures all requests/responses for this page)
   if (!this._networkInterceptSetup) {
     this.networkRequests = [];
@@ -28,6 +51,25 @@ Given('user navigates to {string}', async function (url) {
     this._networkInterceptSetup = true;
     console.log('📡 Network intercept listeners active');
   }
+
+  const url = resolveNamedUrl(target);
+  if (url !== target) {
+    console.log(`📋 Resolved "${target}" → ${url}`);
+  }
+  if (!/^https?:\/\//i.test(url)) {
+    throw new Error(`Could not resolve "${target}" to a URL. Add it to the "Environment URLs" sheet in Confluence, or pass a full https:// URL.`);
+  }
+
+  // ─── PIM site: authenticate before navigating ───
+  if (/stage-pim\.hyundai\.com\.au|pim\.hyundai\.com\.au/i.test(url)) {
+    console.log('🔐 PIM URL detected — authenticating via /api/authenticate...');
+    // Decide which company to pick from the page name (defaults to Hyundai).
+    const company = /genesis/i.test(target) ? 'Genesis' : 'Hyundai';
+    await authenticatePim(this, { company });
+    console.log(`✅ PIM authenticated and "${company}" selected`);
+    return;
+  }
+
   console.log(`📋 Navigating to: ${url}`);
   await this.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await this.page.waitForLoadState('networkidle', { timeout: 30000 }).catch(() => {});

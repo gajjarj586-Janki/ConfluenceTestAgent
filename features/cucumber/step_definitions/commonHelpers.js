@@ -65,3 +65,98 @@ export async function handleLocationModal(page, postcode = '2000') {
     await page.waitForTimeout(500);
   }
 }
+
+/**
+ * Click a variant tile on the Hyundai consumer calculator
+ * (e.g. "VENUE Active"). Tries exact text, role-based, then fuzzy.
+ */
+export async function selectConsumerVariant(page, variant) {
+  console.log(`🖱️  Selecting variant on calculator: ${variant}`);
+  const escRe = variant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const candidates = [
+    page.getByText(variant, { exact: true }),
+    page.getByText(new RegExp(`^\\s*${escRe}\\s*$`, 'i')),
+    page.getByRole('button', { name: new RegExp(escRe, 'i') }),
+    page.getByRole('link', { name: new RegExp(escRe, 'i') }),
+    page.getByText(new RegExp(escRe, 'i')),
+  ];
+  let target = null;
+  for (const loc of candidates) {
+    const first = loc.first();
+    try {
+      await first.waitFor({ state: 'visible', timeout: 4000 });
+      target = first;
+      break;
+    } catch { /* try next */ }
+  }
+  if (!target) {
+    const samples = await page.evaluate(() => {
+      const out = []; const seen = new Set();
+      document.querySelectorAll('button, a, h2, h3, h4, [role="button"], div, span').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) return;
+        let t = '';
+        for (const n of el.childNodes) if (n.nodeType === 3) t += n.nodeValue;
+        t = t.trim();
+        if (!t || t.length > 60 || seen.has(t)) return;
+        seen.add(t); out.push(t);
+      });
+      return out.slice(0, 40);
+    }).catch(() => []);
+    throw new Error(`Could not find variant "${variant}" on the consumer calculator. Visible candidates: ${JSON.stringify(samples)}`);
+  }
+  await target.scrollIntoViewIfNeeded().catch(() => {});
+  await Promise.all([
+    page.waitForResponse(r => /variantpricecalc/i.test(r.url()) && r.ok(), { timeout: 30000 }).catch(() => null),
+    target.click({ timeout: 8000 }),
+  ]);
+  await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
+}
+
+/**
+ * Click a non-variant option on the Hyundai consumer calculator
+ * (powertrain, transmission, option pack value, etc.).
+ */
+export async function selectConsumerOption(page, label) {
+  console.log(`🖱️  Selecting option on calculator: ${label}`);
+  const escRe = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const exactRe = new RegExp(`^\\s*${escRe}\\s*$`, 'i');
+  const candidates = [
+    page.getByRole('button', { name: exactRe }),
+    page.getByRole('radio', { name: exactRe }),
+    page.getByRole('link', { name: exactRe }),
+    page.getByText(label, { exact: true }),
+    page.getByText(exactRe),
+  ];
+  let target = null;
+  for (const loc of candidates) {
+    const first = loc.first();
+    try {
+      await first.waitFor({ state: 'visible', timeout: 4000 });
+      target = first;
+      break;
+    } catch { /* try next */ }
+  }
+  if (!target) {
+    const samples = await page.evaluate(() => {
+      const out = []; const seen = new Set();
+      document.querySelectorAll('button, a, h2, h3, h4, [role="button"], [role="radio"], div, span').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) return;
+        let t = '';
+        for (const n of el.childNodes) if (n.nodeType === 3) t += n.nodeValue;
+        t = t.trim();
+        if (!t || t.length > 60 || seen.has(t)) return;
+        seen.add(t); out.push(t);
+      });
+      return out.slice(0, 60);
+    }).catch(() => []);
+    throw new Error(`Could not find consumer option "${label}". Visible candidates: ${JSON.stringify(samples)}`);
+  }
+  await target.scrollIntoViewIfNeeded().catch(() => {});
+  await Promise.all([
+    page.waitForResponse(r => /variantpricecalc/i.test(r.url()) && r.ok(), { timeout: 10000 }).catch(() => null),
+    target.click({ timeout: 8000 }),
+  ]);
+  await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
+}

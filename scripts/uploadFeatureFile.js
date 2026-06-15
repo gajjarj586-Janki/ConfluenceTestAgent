@@ -65,7 +65,7 @@ async function uploadFeatureFile(filePath) {
     throw new Error(`Upload failed (${uploadRes.status}): ${err.substring(0, 300)}`);
   }
 
-  console.log(`✅ ${filename} uploaded to Confluence page ${pageId}`);
+  const resJson = await uploadRes.json(); const version = resJson.results?.[0]?.version?.number || resJson.version?.number; console.log(`? ${filename} uploaded to Confluence page ${pageId} (Version: ${version})`);
 }
 
 // CLI entry

@@ -1,0 +1,704 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - banner:                         
+    - main [ref=e316]:
+      - generic [ref=e319]:
+        - generic [ref=e321]:
+          - generic [ref=e323]:
+            - link "Hyundai Logo" [ref=e325] [cursor=pointer]:
+              - /url: /au/en
+              - img "Hyundai Logo" [ref=e326]
+            - generic [ref=e327]: Car Price Calculator
+            - generic [ref=e329]:
+              - generic [ref=e330]: 
+              - generic [ref=e331] [cursor=pointer]: Sydney City Hyundai
+            - generic [ref=e332]:
+              - link "Contact a dealer" [ref=e334] [cursor=pointer]:
+                - /url: ""
+              - link "Go to home page" [ref=e336] [cursor=pointer]:
+                - /url: /au/en/shop/calculator/
+                - text: 
+          - text: 
+          - generic [ref=e627]:
+            - generic [ref=e630]:
+              - generic [ref=e631]:
+                - text: Email me the quote.
+                - generic [ref=e632] [cursor=pointer]: Close 
+              - generic [ref=e635]:
+                - generic [ref=e636]:
+                  - textbox "First Name*" [ref=e637]
+                  - generic: First Name*
+                - generic [ref=e638]:
+                  - textbox "Last Name*" [ref=e639]
+                  - generic: Last Name*
+                - generic [ref=e640]:
+                  - textbox "Email Address*" [ref=e641]
+                  - generic: Email Address*
+                - generic [ref=e643]:
+                  - text: 
+                  - generic [ref=e644]:
+                    - text: Yes, I would like to hear more from Hyundai Australia to be the first to know about special offers, giveaways, new products, and innovations. By subscribing, you are agreeing to our
+                    - link "Privacy Policy" [ref=e645] [cursor=pointer]:
+                      - /url: /au/en/privacy
+                    - text: and to receiving marketing communications from Hyundai Motor Company Australia.
+                - generic [ref=e647]:  I would like to request a callback from a Hyundai dealer.
+                - button "Submit" [ref=e649] [cursor=pointer]
+            - generic [ref=e652]:
+              - generic [ref=e653]:
+                - generic [ref=e654]:
+                  - generic [ref=e655]:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - heading "VENUE" [level=1]
+                          - link "Change vehicle " [ref=e656] [cursor=pointer]:
+                            - /url: /au/en/shop/calculator/
+                            - text: Change vehicle
+                            - generic [ref=e657]: 
+                    - text:  
+                  - generic [ref=e658]:
+                    - generic [ref=e659]:
+                      - heading "Select variant." [level=2] [ref=e660]
+                      - generic [ref=e662] [cursor=pointer]:
+                        - text: Find what's behind each variant
+                        - generic [ref=e663]: 
+                      - generic [ref=e664]:
+                        - generic [ref=e667] [cursor=pointer]: VENUE
+                        - generic [ref=e669] [cursor=pointer]:
+                          - generic [ref=e670]: VENUE Active
+                          - generic [ref=e672]: + Driveaway Offer
+                        - generic [ref=e675] [cursor=pointer]: VENUE Elite
+                    - generic [ref=e676]:
+                      - heading "Choose your powertrain." [level=2] [ref=e677]
+                      - generic [ref=e681] [cursor=pointer]: 1.6 MPi Petrol
+                    - generic [ref=e682]:
+                      - heading "Transmission." [level=2] [ref=e683]
+                      - generic [ref=e684]:
+                        - generic [ref=e687] [cursor=pointer]: 6-Speed Automatic FWD
+                        - generic [ref=e690] [cursor=pointer]: 6-Speed Manual FWD
+                    - generic [ref=e691]:
+                      - heading "Colour." [level=2] [ref=e692]
+                      - generic [ref=e693]:
+                        - generic [ref=e694]:
+                          - generic [ref=e695]: Exterior
+                          - generic [ref=e696]: Recommended Retail Price (RRP) shown, at participating dealers.
+                          - generic [ref=e697]:
+                            - generic [ref=e698] [cursor=pointer]:
+                              - generic [ref=e699]: Abyss Black
+                              - generic [ref=e700]: + $595
+                            - generic [ref=e702] [cursor=pointer]: Atlas White
+                            - generic [ref=e703] [cursor=pointer]:
+                              - generic [ref=e704]: Denim Blue
+                              - generic [ref=e705]: + $595
+                            - generic [ref=e706] [cursor=pointer]:
+                              - generic [ref=e707]: Ecotronic Grey
+                              - generic [ref=e708]: + $595
+                            - generic [ref=e709] [cursor=pointer]:
+                              - generic [ref=e710]: Intense Blue
+                              - generic [ref=e711]: + $595
+                            - generic [ref=e712] [cursor=pointer]:
+                              - generic [ref=e713]: Shimmering Silver
+                              - generic [ref=e714]: + $595
+                            - generic [ref=e715] [cursor=pointer]:
+                              - generic [ref=e716]: Ultimate Red
+                              - generic [ref=e717]: + $595
+                        - generic [ref=e718]:
+                          - generic [ref=e719]: Interior
+                          - generic [ref=e720]: Recommended Retail Price (RRP) shown, at participating dealers.
+                          - generic [ref=e722] [cursor=pointer]:
+                            - img "Black - Premium Cloth" [ref=e723]
+                            - generic [ref=e724]: Black - Premium Cloth
+                    - generic [ref=e725]:
+                      - heading "Genuine Accessories." [level=2] [ref=e726]
+                      - generic [ref=e728] [cursor=pointer]:
+                        - text: The benefits of genuine
+                        - generic [ref=e729]: 
+                      - paragraph [ref=e730]: Featured
+                      - paragraph [ref=e731]: 0 selected ($0.00)
+                      - generic [ref=e732]:
+                        - generic [ref=e734]:
+                          - link "Interior Pack" [ref=e735] [cursor=pointer]:
+                            - /url: javascript:void(0)
+                            - generic [ref=e736]: 
+                          - link "Interior Pack" [ref=e737] [cursor=pointer]:
+                            - /url: javascript:void(0)
+                          - generic [ref=e738]:
+                            - paragraph [ref=e739]: Packs
+                            - link "Learn more " [ref=e740] [cursor=pointer]:
+                              - /url: javascript:void(0);
+                              - text: Learn more
+                              - generic [ref=e741]: 
+                            - generic [ref=e742]: $374.15
+                        - generic [ref=e744]:
+                          - link "Dash mat - red stitching" [ref=e745] [cursor=pointer]:
+                            - /url: javascript:void(0)
+                            - generic [ref=e746]: 
+                          - link "Dash mat - red stitching" [ref=e747] [cursor=pointer]:
+                            - /url: javascript:void(0)
+                          - generic [ref=e748]:
+                            - paragraph [ref=e749]: Interior
+                            - link "Learn more " [ref=e750] [cursor=pointer]:
+                              - /url: javascript:void(0);
+                              - text: Learn more
+                              - generic [ref=e751]: 
+                            - generic [ref=e752]: $106.34
+                        - generic [ref=e754]:
+                          - link "Rear window shades (set of 2)" [ref=e755] [cursor=pointer]:
+                            - /url: javascript:void(0)
+                            - generic [ref=e756]: 
+                          - link "Rear window shades (set of 2)" [ref=e757] [cursor=pointer]:
+                            - /url: javascript:void(0)
+                          - generic [ref=e758]:
+                            - paragraph [ref=e759]: Interior
+                            - link "Learn more " [ref=e760] [cursor=pointer]:
+                              - /url: javascript:void(0);
+                              - text: Learn more
+                              - generic [ref=e761]: 
+                            - generic [ref=e762]: $208.68
+                        - generic [ref=e764]:
+                          - link "Tailored Rubber Floor Mats (set of 4)" [ref=e765] [cursor=pointer]:
+                            - /url: javascript:void(0)
+                            - generic [ref=e766]: 
+                          - link "Tailored Rubber Floor Mats (set of 4)" [ref=e767] [cursor=pointer]:
+                            - /url: javascript:void(0)
+                          - generic [ref=e768]:
+                            - paragraph [ref=e769]: Interior
+                            - link "Learn more " [ref=e770] [cursor=pointer]:
+                              - /url: javascript:void(0);
+                              - text: Learn more
+                              - generic [ref=e771]: 
+                            - generic [ref=e772]: $137.85
+                      - link "View all accessories " [ref=e773] [cursor=pointer]:
+                        - /url: javascript:void(0);
+                        - text: View all accessories
+                        - generic [ref=e774]: 
+                    - generic [ref=e776]:
+                      - heading "Pre-Paid Servicing (optional)." [level=2] [ref=e777]:
+                        - text: Pre-Paid Servicing
+                        - text: (optional).
+                      - generic [ref=e779] [cursor=pointer]:
+                        - text: See how it works
+                        - generic [ref=e780]: 
+                      - generic [ref=e781]:
+                        - generic [ref=e782] [cursor=pointer]: None
+                        - generic [ref=e784] [cursor=pointer]:
+                          - generic [ref=e785]:
+                            - text: 3 years, up to
+                            - text: 45,000kms
+                          - generic [ref=e786]: + $1,124
+                        - generic [ref=e788] [cursor=pointer]:
+                          - generic [ref=e789]:
+                            - text: 4 years, up to
+                            - text: 60,000kms
+                          - generic [ref=e790]: + $1,661
+                        - generic [ref=e792] [cursor=pointer]:
+                          - generic [ref=e793]:
+                            - text: 5 years, up to
+                            - text: 75,000kms
+                          - generic [ref=e794]: + $1,976
+                    - generic [ref=e795]:
+                      - generic [ref=e796]:
+                        - heading "VENUE" [level=2] [ref=e797]
+                        - generic [ref=e798]: Venue 1.6L Petrol 6-Speed Manual FWD
+                        - link "Change vehicle" [ref=e799] [cursor=pointer]:
+                          - /url: /au/en/shop/calculator/
+                          - text: Change vehicle
+                          - generic [ref=e800]: 
+                      - text: 
+                      - generic [ref=e801]:
+                        - button "Expand price breakdown" [ref=e804] [cursor=pointer]:
+                          - generic [ref=e805]:
+                            - text: Drive away
+                            - superscript [ref=e807]: "[D]"
+                          - generic [ref=e808]: $17,021.67
+                          - generic [ref=e810]: 
+                        - generic [ref=e811]:
+                          - generic [ref=e812]: Personalised Rate
+                          - generic [ref=e813]:
+                            - text: Get your personalised interest rate without affecting your credit score.
+                            - button "Tooltip" [ref=e816]:
+                              - generic [ref=e817] [cursor=pointer]: i
+                          - button "Get your personalised interest rate" [ref=e818] [cursor=pointer]: Get Personalised Rate
+                - generic:
+                  - tablist "Price and finance options" [ref=e820]:
+                    - tab "Drive Away Price" [selected] [ref=e821] [cursor=pointer]
+                    - tab "Hyundai Finance" [ref=e822] [cursor=pointer]
+                    - tab "Novated Lease" [ref=e823] [cursor=pointer]
+                  - tabpanel "Drive Away Price" [ref=e825]:
+                    - generic [ref=e826]:
+                      - generic [ref=e827]: 
+                      - generic [ref=e828]:
+                        - text: drive away
+                        - button "View price summary" [ref=e830] [cursor=pointer]:
+                          - generic [ref=e831]:
+                            - text: View price summary
+                            - generic [ref=e832]: 
+                    - generic [ref=e834]:
+                      - generic [ref=e835]:
+                        - text: $17,021.67
+                        - link "[D]" [ref=e836] [cursor=pointer]:
+                          - /url: "#"
+                          - superscript [ref=e837]: "[D]"
+                      - generic [ref=e838]: Estimated Drive Away
+                    - generic [ref=e839]:
+                      - generic [ref=e840]: 
+                      - generic [ref=e841]:
+                        - generic [ref=e842]:
+                          - text: Enquire Now
+                          - generic [ref=e843]: by Sydney City Hyundai
+                        - paragraph [ref=e844] [cursor=pointer]: Contact Us Today
+                  - dialog "Hyundai Finance": i i i i i $ i 
+              - generic [ref=e845]:
+                - generic [ref=e847]:
+                  - generic [ref=e848]: 
+                  - paragraph [ref=e849]: Get into the drivers seat.
+                  - button "Book a test drive" [ref=e851] [cursor=pointer]
+                - generic [ref=e852]:
+                  - generic [ref=e853]: 
+                  - paragraph [ref=e854]: Want to speak to your local dealer?
+                  - button "Contact a dealer" [ref=e855] [cursor=pointer]
+                - generic [ref=e857]:
+                  - generic [ref=e858]: 
+                  - paragraph [ref=e859]: Want to trade-in?
+                  - button "Book a valuation" [ref=e860] [cursor=pointer]
+              - text:   
+              - generic [ref=e863]:
+                - heading "Disclaimers" [level=2] [ref=e864]
+                - separator [ref=e865]
+                - paragraph [ref=e867]:
+                  - paragraph [ref=e868]: This “Select a rate” tool repayment estimator is indicative only, and does not take into account your personal circumstances, finance offer changes, fees, charges and interest rate differences. The results of this calculator should not be relied upon for the purpose of a loan application and is not an offer for the purpose of obtaining finance. Approved applicants only. Terms, conditions, fees, charges, lending and eligibility criteria apply. Hyundai Capital Australia Pty Ltd (ABN 42 611 226 316), Australian Credit Licence 554051 trading as Hyundai Finance.
+                  - paragraph [ref=e869]
+                  - paragraph [ref=e870]: Variance in estimates
+                  - paragraph [ref=e871]: The Drive Away Price, estimated repayment and Guaranteed Future Value displayed may differ between the ‘Select a rate’ and ‘Personalised interest rate’ options, due to differences in underlying data sources and update timing. All figures shown are indicative only and subject to change.
+                - paragraph [ref=e874]:
+                  - strong [ref=e875]: "[D]"
+                  - text: The Drive-away Price is an estimated price which includes the manufacturer’s recommended list price (MLP) for the vehicle, 12 months registration, compulsory third party insurance (CTP) based on a private purchaser with a good driving record, an estimated charge for dealer delivery, stamp duty, luxury car tax (if applicable) and the options entered. Actual drive away price may differ depending on your state, choice of authorised Hyundai dealer, your individual circumstances, and your choice of insurer. Accordingly, please contact your local Hyundai Dealer to confirm the price that is specific to you. Always consult your authorised Hyundai dealer for the latest information on Hyundai vehicles and to confirm specification and pricing. To the maximum extent permitted by law, Hyundai Motor Company Australia provides no warranty as to the reliability, completeness, or accuracy of the information on this tool and accepts no liability for the content contained within this tool.
+                - paragraph [ref=e877]:
+                  - strong [ref=e878]: "[F1]"
+                  - text: The Hyundai Finance Personalised Pricing tool (including all rates and repayments) is indicative only and is not an offer or quote for finance. It is generated using information you provide and may include your credit score, deposit amount, loan term, repayment frequency and estimated kilometre usage. Final rates and terms will depend on a full credit assessment, verification of your financial position and satisfaction of Hyundai Finance’s lending criteria. It does not constitute financial advice. You should consider whether any Hyundai Finance product is appropriate for your circumstances and seek independent legal, financial or tax advice if necessary.
+                - paragraph [ref=e880]:
+                  - strong [ref=e881]: "[F2]"
+                  - text: The estimated repayment is indicative only. Finance to approved applicants only. Terms, conditions, fees, charges, lending and eligibility criteria apply. Repayments include fees and charges but do not include a Dealer Agency Fee applicable to consumer loans (up to $1200) or a Dealer Origination Fee applicable to business loans (up to $1300) which may also apply. If applicable, such fees will increase the estimated repayment amount.
+                - paragraph [ref=e883]:
+                  - strong [ref=e884]: "[F3]"
+                  - text: The Guaranteed Future Value (GFV) is the minimum future value of your approved Hyundai set out in your contract. At the end of the term, you can choose to sell your car to us, and we will pay the GFV which you can deduct from the amount you pay us under the contract on the last day of term. We will only pay the GFV if, on the last day of term, you're not in default under your contract, your contract has not ended early, and you have met the fair wear and tear requirements and the agreed kilometres. Adjustments to the GFV may apply that result in you having to pay any shortfall to meet your obligations under the contract. Approved applicants only. Terms, conditions, fees, charges, lending and eligibility criteria apply.
+                - paragraph [ref=e886]:
+                  - strong [ref=e887]: "[F4]"
+                  - generic [ref=e888]: "Comparison rate is based on a 5 year secured consumer fixed rate loan of $30,000. WARNING: This comparison rate is true only for the examples given and may not include all fees and charges. Different terms, fees or other loan amounts might result in a different comparison rate."
+                - paragraph [ref=e889]:
+                  - paragraph [ref=e891]: Please note we are experiencing delivery delays for some Hyundai Venue Elites. Contact your local dealer for more details.
+                - paragraph [ref=e892]:
+                  - paragraph [ref=e894]: Availability of vehicles at individual dealers is based on Hyundai Australia records at the time of publication. Real time availability cannot be guaranteed and should be confirmed with individual dealers.
+          - generic [ref=e339]:
+            - button "Close " [ref=e341] [cursor=pointer]:
+              - text: Close
+              - generic [ref=e342]: 
+            - heading "Stock Locator" [level=2] [ref=e343]
+            - paragraph [ref=e344]:
+              - text: Your dealer
+              - strong [ref=e345]: Sydney City Hyundai
+              - text: is currently out of stock.
+            - paragraph [ref=e346]: "Your closest dealers with stock are:"
+            - generic [ref=e347]:
+              - generic [ref=e348]:
+                - article [ref=e349]:
+                  - generic [ref=e350]:
+                    - generic [ref=e352]: 
+                    - generic [ref=e353]:
+                      - generic [ref=e354]: N in stock
+                      - generic [ref=e355]: Suttons Hyundai Arncliffe - Arncliffe NSW
+                  - generic [ref=e356]:
+                    - generic [ref=e357]: NaN km away
+                    - text: "|"
+                    - link "Get Directions" [ref=e359] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/-33.93258,151.1528
+                    - text: "|"
+                    - generic [ref=e360]:
+                      - generic [ref=e361]: 
+                      - text: 02 9099 9129
+                  - generic [ref=e362]:
+                    - button "Contact Dealer" [ref=e363] [cursor=pointer]
+                    - button "Pay Deposit" [ref=e364] [cursor=pointer]
+                - article [ref=e365]:
+                  - generic [ref=e366]:
+                    - generic [ref=e368]: 
+                    - generic [ref=e369]:
+                      - generic [ref=e370]: N in stock
+                      - generic [ref=e371]: Paul Wakeling Hyundai - Campbelltown NSW
+                  - generic [ref=e372]:
+                    - generic [ref=e373]: NaN km away
+                    - text: "|"
+                    - link "Get Directions" [ref=e375] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/-34.05211,150.8233
+                    - text: "|"
+                    - generic [ref=e376]:
+                      - generic [ref=e377]: 
+                      - text: 02 4603 7500
+                  - button "Contact Dealer" [ref=e379] [cursor=pointer]
+                - article [ref=e380]:
+                  - generic [ref=e381]:
+                    - generic [ref=e383]: 
+                    - generic [ref=e384]:
+                      - generic [ref=e385]: N in stock
+                      - generic [ref=e386]: Stillwell Hyundai - Ingle Farm SA
+                  - generic [ref=e387]:
+                    - generic [ref=e388]: NaN km away
+                    - text: "|"
+                    - link "Get Directions" [ref=e390] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/-34.82421,138.6364
+                    - text: "|"
+                    - generic [ref=e391]:
+                      - generic [ref=e392]: 
+                      - text: 08 7111 2115
+                  - generic [ref=e393]:
+                    - button "Contact Dealer" [ref=e394] [cursor=pointer]
+                    - button "Pay Deposit" [ref=e395] [cursor=pointer]
+                - article [ref=e396]:
+                  - generic [ref=e397]:
+                    - generic [ref=e399]: 
+                    - generic [ref=e400]:
+                      - generic [ref=e401]: N in stock
+                      - generic [ref=e402]: Central Highlands Hyundai - Emerald QLD
+                  - generic [ref=e403]:
+                    - generic [ref=e404]: NaN km away
+                    - text: "|"
+                    - link "Get Directions" [ref=e406] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/-23.52034,148.1566
+                    - text: "|"
+                    - generic [ref=e407]:
+                      - generic [ref=e408]: 
+                      - text: 07 4843 3700
+                  - generic [ref=e409]:
+                    - button "Contact Dealer" [ref=e410] [cursor=pointer]
+                    - button "Pay Deposit" [ref=e411] [cursor=pointer]
+              - button "Show more " [ref=e413] [cursor=pointer]:
+                - text: Show more
+                - generic [ref=e414]: 
+        - generic [ref=e415]:
+          - heading "Coming soon at Hyundai." [level=2] [ref=e424]
+          - generic [ref=e428]:
+            - generic [ref=e429]:
+              - generic [ref=e430]:
+                - heading "The all-new IONIQ 6 N." [level=3] [ref=e431]
+                - paragraph [ref=e432]: A new paradigm for high-performance EV.
+              - generic [ref=e433]:
+                - link "Register your interest" [ref=e435] [cursor=pointer]:
+                  - /url: /content/hyundai/au/en/cars/eco/ioniq6-n-ryi
+                - img "\" A side profile of a blue Hyundai Ioniq 6 N\"" [ref=e437]
+            - generic [ref=e438]:
+              - generic [ref=e439]:
+                - heading "The all-new ELEXIO." [level=3] [ref=e440]
+                - paragraph [ref=e441]: Be first. Drive the future.
+              - generic [ref=e442]:
+                - link "Register your interest" [ref=e444] [cursor=pointer]:
+                  - /url: /content/hyundai/au/en/cars/eco/elexio-ryi
+                - img "\"Coming Soon Side Profile_640x331 - Hyundai_ELEXIO_Side_Profile_640x331\"" [ref=e446]
+          - heading "Disclaimers" [level=3] [ref=e455]
+          - generic [ref=e459]:
+            - link " Build & Price" [ref=e460] [cursor=pointer]:
+              - /url: /au/en/shop/calculator
+              - generic [ref=e461]: 
+              - generic [ref=e462]: Build & Price
+            - link " Find a dealer" [ref=e465] [cursor=pointer]:
+              - /url: /au/en/find-a-dealer
+              - generic [ref=e466]: 
+              - generic [ref=e467]: Find a dealer
+            - link " test drive" [ref=e470] [cursor=pointer]:
+              - /url: /au/en/book-a-test-drive
+              - generic [ref=e471]: 
+              - generic [ref=e472]: test drive
+            - link " Quote & Book a Service" [ref=e475] [cursor=pointer]:
+              - /url: /au/en/find-a-dealer#service
+              - generic [ref=e476]: 
+              - generic [ref=e477]: Quote & Book a Service
+    - contentinfo [ref=e485]:
+      - generic [ref=e487]:
+        - generic [ref=e488]:
+          - link "Hyundai Motor Company Australia" [ref=e489] [cursor=pointer]:
+            - /url: https://hyundai-aem-proxy-stage.orchard.net.au/au/en
+            - img "Hyundai Motor Company Australia Logo" [ref=e490]
+          - link [ref=e491] [cursor=pointer]:
+            - /url: /au/en/cars/sports-cars
+            - img [ref=e492]
+          - img [ref=e494]
+        - navigation [ref=e495]:
+          - link "" [ref=e496] [cursor=pointer]:
+            - /url: https://www.facebook.com/HyundaiAustralia/
+            - generic [ref=e497]: 
+          - link "" [ref=e498] [cursor=pointer]:
+            - /url: http://twitter.com/hyundaiaus
+            - generic [ref=e499]: 
+          - link "" [ref=e500] [cursor=pointer]:
+            - /url: http://www.youtube.com/user/ChannelHyundai#p/u
+            - generic [ref=e501]: 
+          - link "" [ref=e502] [cursor=pointer]:
+            - /url: http://instagram.com/hyundaiaus?ref=badge
+            - generic [ref=e503]: 
+          - link "" [ref=e504] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/hyundai-motor-company-australia/
+            - generic [ref=e505]: 
+          - link "" [ref=e506] [cursor=pointer]:
+            - /url: https://www.tiktok.com/@hyundaiaustralia?lang=en
+            - generic [ref=e507]: 
+      - generic [ref=e509]:
+        - generic [ref=e510]:
+          - generic [ref=e511]:
+            - heading "Popular Vehicles" [level=2] [ref=e513]
+            - navigation "Popular Vehicles" [ref=e514]:
+              - generic [ref=e515]:
+                - link "i30 Sedan Hybrid" [ref=e516] [cursor=pointer]:
+                  - /url: /au/en/cars/small-cars/i30/i30-sedan-hybrid
+                - link "KONA" [ref=e517] [cursor=pointer]:
+                  - /url: /au/en/cars/suvs/kona
+                - link "TUCSON" [ref=e518] [cursor=pointer]:
+                  - /url: /au/en/cars/suvs/tucson
+                - link "SANTA FE Hybrid" [ref=e519] [cursor=pointer]:
+                  - /url: /au/en/cars/suvs/santa-fe-hybrid
+                - link "STARIA Load" [ref=e520] [cursor=pointer]:
+                  - /url: /au/en/cars/people-movers-and-commercial/staria-load
+          - generic [ref=e521]:
+            - heading "Latest offers" [level=2] [ref=e523]
+            - navigation "Latest offers" [ref=e524]:
+              - link "View latest offers" [ref=e526] [cursor=pointer]:
+                - /url: /au/en/offers
+        - generic [ref=e528]:
+          - heading "Buying Tools" [level=2] [ref=e530]
+          - navigation "Buying Tools" [ref=e531]:
+            - generic [ref=e532]:
+              - link "Price a car" [ref=e533] [cursor=pointer]:
+                - /url: /au/en/shop/calculator
+              - link "Guaranteed Future Value" [ref=e534] [cursor=pointer]:
+                - /url: /au/en/shop/guaranteed-future-value
+              - link "Fleet" [ref=e535] [cursor=pointer]:
+                - /url: /au/en/fleet
+              - link "Find a dealer" [ref=e536] [cursor=pointer]:
+                - /url: /au/en/find-a-dealer
+              - link "Book a test drive" [ref=e537] [cursor=pointer]:
+                - /url: /au/en/book-a-test-drive
+              - link "Car accessories" [ref=e538] [cursor=pointer]:
+                - /url: /au/en/owning/accessories
+              - link "Corporate partnerships" [ref=e539] [cursor=pointer]:
+                - /url: /au/en/why-hyundai/corporate-partnerships
+        - generic [ref=e541]:
+          - heading "Ownership" [level=2] [ref=e543]
+          - navigation "Ownership" [ref=e544]:
+            - generic [ref=e545]:
+              - link "Servicing" [ref=e546] [cursor=pointer]:
+                - /url: /au/en/owning/servicing
+              - link "iCare benefits" [ref=e547] [cursor=pointer]:
+                - /url: /au/en/owning/icare
+              - link "Warranty" [ref=e548] [cursor=pointer]:
+                - /url: /au/en/owning/icare/warranty
+              - link "Sat Nav Update" [ref=e549] [cursor=pointer]:
+                - /url: https://update.hyundai.com/AU/EN/Main
+              - link "Quote & Book a Service" [ref=e550] [cursor=pointer]:
+                - /url: /au/en/find-a-dealer#service.html
+              - link "Recalls" [ref=e551] [cursor=pointer]:
+                - /url: /au/en/owning/safety-recalls
+              - link "Emergency response guides" [ref=e552] [cursor=pointer]:
+                - /url: /au/en/cars/eco/ev-emergency-response
+        - generic [ref=e554]:
+          - heading "About Hyundai" [level=2] [ref=e556]
+          - navigation "About Hyundai" [ref=e557]:
+            - generic [ref=e558]:
+              - link "Why Hyundai" [ref=e559] [cursor=pointer]:
+                - /url: /au/en/why-hyundai
+              - link "Subscribe" [ref=e560] [cursor=pointer]:
+                - /url: /au/en/subscribe
+              - link "News" [ref=e561] [cursor=pointer]:
+                - /url: /au/en/why-hyundai/news
+              - link "Sponsorship" [ref=e562] [cursor=pointer]:
+                - /url: /au/en/why-hyundai/sponsorships
+              - link "Careers" [ref=e563] [cursor=pointer]:
+                - /url: /au/en/hyundai-info/careers
+              - link "Hyundai Help for Kids" [ref=e564] [cursor=pointer]:
+                - /url: /au/en/why-hyundai/community/hyundai-help-for-kids
+        - link " Contact us" [ref=e566] [cursor=pointer]:
+          - /url: /au/en/customer-care
+          - generic [ref=e567]: 
+          - generic [ref=e568]: Contact us
+      - generic [ref=e570]:
+        - list [ref=e571]:
+          - listitem [ref=e572]:
+            - link "SITEMAP" [ref=e573] [cursor=pointer]:
+              - /url: /au/en/sitemap
+          - listitem [ref=e574]:
+            - link "PRIVACY" [ref=e575] [cursor=pointer]:
+              - /url: /au/en/privacy
+          - listitem [ref=e576]:
+            - link "MODERN SLAVERY STATEMENT" [ref=e577] [cursor=pointer]:
+              - /url: /au/en/modern-slavery-statement
+          - listitem [ref=e578]:
+            - link "DISCLAIMER" [ref=e579] [cursor=pointer]:
+              - /url: /au/en/disclaimer
+        - paragraph [ref=e580]:
+          - generic [ref=e581]: © 2025 Copyright Hyundai Motor Company, Australia Pty Limited
+  - img [ref=e582]
+  - generic [ref=e585]:
+    - generic [ref=e586]:
+      - generic [ref=e587]: Contact a dealer.
+      - generic [ref=e588] [cursor=pointer]: Close 
+    - generic [ref=e589]:
+      - generic [ref=e590]:
+        - paragraph [ref=e591]: We're here to help you find the best Hyundai to suit your needs. Simply fill out the fields below and one of our specialists from your local dealer will be in touch soon.
+        - generic [ref=e592]: Contact details
+        - generic [ref=e593]:
+          - combobox "Title*" [ref=e594]:
+            - option "Mr"
+            - option "Mrs"
+            - option "Miss"
+            - option "Dr"
+            - option "Ms"
+            - option "Mx"
+          - generic: Title*
+          - text: 
+        - generic [ref=e595]:
+          - textbox "First Name*" [ref=e596]
+          - generic: First Name*
+        - generic [ref=e597]:
+          - textbox "Last Name*" [ref=e598]
+          - generic: Last Name*
+        - generic [ref=e599]:
+          - textbox "Email Address*" [ref=e600]
+          - generic: Email Address*
+        - generic [ref=e601]:
+          - textbox "Phone Number*" [ref=e602]
+          - generic: Phone Number*
+        - generic [ref=e603]:
+          - textbox "Postcode*" [ref=e604]: "2000"
+          - generic: Postcode*
+          - text:     
+        - generic [ref=e605]:
+          - combobox "When are you likely to purchase?" [ref=e606]:
+            - option "0-3 Months"
+            - option "3-6 Months"
+            - option "6-12 Months"
+            - option "12 Months+"
+            - option "Just Looking"
+          - generic: When are you likely to purchase?
+          - text: 
+        - generic [ref=e607]:
+          - combobox "Model of interest*" [ref=e608]:
+            - option "ELEXIO"
+            - option "i20 N"
+            - option "i30"
+            - option "i30 N"
+            - option "i30 Sedan N"
+            - option "INSTER"
+            - option "IONIQ 5"
+            - option "IONIQ 5 N"
+            - option "IONIQ 9"
+            - option "KONA"
+            - option "PALISADE"
+            - option "QA regression"
+            - option "SANTA FE"
+            - option "SONATA N Line"
+            - option "STARIA"
+            - option "STARIA Load"
+            - option "TUCSON"
+            - option "VENUE"
+          - generic: Model of interest*
+          - text: 
+        - generic [ref=e609]:
+          - combobox "Are you Interested in Hyundai Finance?" [ref=e610]:
+            - option "Yes"
+            - option "No"
+          - generic: Are you Interested in Hyundai Finance?
+          - text: 
+        - generic [ref=e612]:
+          - text: 
+          - generic [ref=e613]:
+            - text: I consent to Hyundai Motor Company Australia Pty Ltd collecting and using my personal information in accordance with its
+            - link "Privacy Collection Notice" [ref=e614] [cursor=pointer]:
+              - /url: https://www.hyundai.com/au/en/privacy/privacy-collection-notice
+            - text: and
+            - link "Privacy Policy" [ref=e615] [cursor=pointer]:
+              - /url: https://www.hyundai.com/au/en/privacy
+            - text: .*
+        - generic [ref=e617]:
+          - text: 
+          - generic [ref=e618]: I consent to Hyundai Motor Company Australia Pty Ltd sharing my personal information with my selected Hyundai dealer for the purpose of contacting me about my interest in purchasing a vehicle and I also understand that my personal information may be shared with a Hyundai Finance Business Manager at that dealership so they can contact me about finance options.
+      - generic [ref=e619]:
+        - paragraph [ref=e620]: All fields marked with * are mandatory.
+        - button "Submit" [ref=e622] [cursor=pointer]
+  - generic [ref=e897]:
+    - generic [ref=e898]:
+      - generic [ref=e899]: Book a valuation.
+      - generic [ref=e900] [cursor=pointer]: Close 
+    - generic [ref=e901]:
+      - generic [ref=e907]:
+        - paragraph [ref=e908]: Get a valuation on your vehicle. Every car, no matter how old, still has a value that can be put towards the purchase of your new car.
+        - heading "Model I am interested in*" [level=3] [ref=e909]
+        - generic [ref=e910]:
+          - combobox "Model*" [ref=e911]:
+            - option "ELEXIO"
+            - option "i20 N"
+            - option "i30"
+            - option "i30 N"
+            - option "i30 Sedan N"
+            - option "INSTER"
+            - option "IONIQ 5"
+            - option "IONIQ 5 N"
+            - option "IONIQ 9"
+            - option "KONA"
+            - option "PALISADE"
+            - option "QA regression"
+            - option "SANTA FE"
+            - option "SONATA N Line"
+            - option "STARIA"
+            - option "STARIA Load"
+            - option "TUCSON"
+            - option "VENUE"
+          - generic: Model*
+          - text: 
+      - generic [ref=e913]:
+        - group [ref=e914]:
+          - button "Next" [ref=e915] [cursor=pointer]
+        - generic [ref=e917]:
+          - text: View our online
+          - link "Privacy Policy" [ref=e918] [cursor=pointer]:
+            - /url: /au/en/privacy
+  - generic [ref=e923]:
+    - generic [ref=e924]:
+      - generic [ref=e925]: Book a test drive.
+      - generic [ref=e926] [cursor=pointer]: 
+    - generic [ref=e927]:
+      - generic [ref=e932]:
+        - paragraph [ref=e933]: Are you ready to experience your next Hyundai vehicle? Book a test drive with us today!
+        - generic [ref=e934]: Model I am interested in*
+        - generic [ref=e935]:
+          - combobox "Model*" [ref=e936]:
+            - option "ELEXIO"
+            - option "i20 N"
+            - option "i30"
+            - option "i30 N"
+            - option "i30 Sedan N"
+            - option "INSTER"
+            - option "IONIQ 5"
+            - option "IONIQ 5 N"
+            - option "IONIQ 9"
+            - option "KONA"
+            - option "PALISADE"
+            - option "QA regression"
+            - option "SANTA FE"
+            - option "SONATA N Line"
+            - option "STARIA"
+            - option "STARIA Load"
+            - option "TUCSON"
+            - option "VENUE"
+          - generic: Model*
+          - text: 
+      - generic [ref=e938]:
+        - group [ref=e939]:
+          - button "Next" [ref=e940] [cursor=pointer]
+        - generic [ref=e942]:
+          - text: View our online
+          - link "Privacy Policy" [ref=e943] [cursor=pointer]:
+            - /url: /au/en/privacy

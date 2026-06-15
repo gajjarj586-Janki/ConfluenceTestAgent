@@ -59,8 +59,13 @@ async function fetchFeatureSelection() {
   const $ = cheerio.load(html, { xmlMode: true, decodeEntities: false });
   _pageBody$ = $;
 
-  // Look for a table that has a "Run" column header
+  // Look for ALL tables that have a "Run" column header — the page may
+  // contain multiple sections (e.g. "Feature Selection" + "HIGH TRAFFIC
+  // PAGES"). We merge the selected rows from every qualifying table so a
+  // Yes anywhere on the page gets picked up.
   const tables = $('table');
+  const merged = { run: [], skip: [] };
+  let foundAny = false;
   for (let t = 0; t < tables.length; t++) {
     const table = $(tables[t]);
     const headerCells = table.find('tbody > tr:first-child th, tbody > tr:first-child td, thead > tr:first-child th');
@@ -81,6 +86,7 @@ async function fetchFeatureSelection() {
     );
 
     if (runIdx === -1) continue;
+    foundAny = true;
 
     console.log(`📋 Found Feature Selection table (columns: ${headers.join(', ')})\n`);
 
@@ -108,6 +114,31 @@ async function fetchFeatureSelection() {
       // Fallback: use the display name column
       const displayName = nameIdx !== -1 && cells[nameIdx] ? $(cells[nameIdx]).text().trim() : '';
 
+      // Stronger fallback — if the Feature file cell is empty, search EVERY
+      // cell in the row for any <ri:attachment ri:filename="*.feature"> macro.
+      // This handles the common authoring mistake where the .feature is
+      // attached to the wrong cell (e.g. the In page forms column).
+      if (!featureName) {
+        for (const c of cells) {
+          const a = $(c).find('ri\\:attachment, attachment');
+          if (a.length) {
+            const fname = a.attr('ri:filename') || '';
+            if (fname.toLowerCase().endsWith('.feature')) {
+              featureName = fname;
+              break;
+            }
+          }
+        }
+      }
+
+      // Last resort — derive a .feature filename from the display name column
+      // (e.g. "PIM" → "PIM.feature"). Downstream lookup will then try the
+      // local features/source/ folder and global Confluence search.
+      if (!featureName && displayName) {
+        const slug = displayName.replace(/\s+/g, '');
+        if (slug) featureName = slug.endsWith('.feature') ? slug : `${slug}.feature`;
+      }
+
       const runValue = cells[runIdx] ? $(cells[runIdx]).text().trim().toLowerCase() : '';
 
       // Skip rows with no feature attachment
@@ -117,13 +148,18 @@ async function fetchFeatureSelection() {
       const isSelected = ['yes', 'true', '✅', '✓', 'x', '☑'].includes(runValue);
       if (isSelected) {
         selection.run.push(featureName);
+        console.log(`   ✅ Run: ${featureName}${displayName && displayName !== featureName ? `  (from "${displayName}")` : ''}`);
       } else {
         selection.skip.push(featureName);
       }
     });
 
-    return selection;
+    // Merge this table's results into the global selection
+    for (const f of selection.run) if (!merged.run.includes(f)) merged.run.push(f);
+    for (const f of selection.skip) if (!merged.skip.includes(f) && !merged.run.includes(f)) merged.skip.push(f);
   }
+
+  if (foundAny) return merged;
 
   console.log('⚠️  No Feature Selection table found on page — will download all features');
   return null;

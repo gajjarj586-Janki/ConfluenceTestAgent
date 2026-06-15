@@ -23,18 +23,21 @@ function getSelectedPaths() {
 
 const selectedPaths = getSelectedPaths();
 
+// Cucumber-JS v10+ expects configuration at the top level of the exported
+// object (not wrapped in a `default:` profile). Wrapping it in `default:`
+// silently dropped `paths`, causing Cucumber to fall back to its default
+// glob (features/**/*.feature) and run every feature in features/source/
+// alongside the selected one. Top-level export keeps `paths` honoured.
 export default {
-  default: {
-    paths: selectedPaths,
-    require: [
-      'features/cucumber/support/world.js',
-      'features/cucumber/step_definitions/**/*.js',
-    ],
-    format: [
-      'progress-bar',
-      'json:test-results/cucumber-report.json',
-    ],
-    publishQuiet: true,
-    timeout: 120000,
-  },
+  paths: selectedPaths,
+  require: [
+    'features/cucumber/support/world.js',
+    'features/cucumber/step_definitions/**/*.js',
+  ],
+  format: [
+    'progress-bar',
+    'json:test-results/cucumber-report.json',
+  ],
+  publishQuiet: true,
+  timeout: 120000,
 };

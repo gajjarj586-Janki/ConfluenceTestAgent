@@ -108,8 +108,22 @@ function resolvePageUrl(pageName) {
     'contact us': 'https://stage.hyundai.com.au/au/en/customer-care/contact-us',
     'customer care': 'https://stage.hyundai.com.au/au/en/customer-care/contact-us',
     'contact a dealer': 'https://stage.hyundai.com.au/au/en/contact-a-dealer',
+    'hyundai australia website': 'https://www.hyundai.com.au/',
+    'hyundai australia': 'https://www.hyundai.com.au/',
+    'hyundai website': 'https://www.hyundai.com.au/',
+    'hyundai': 'https://www.hyundai.com.au/',
   };
-  return fallbacks[key] || '';
+  if (fallbacks[key]) return fallbacks[key];
+
+  // Last-resort heuristic: "<brand> <country?> website" → https://www.<brand>.<tld>/
+  // Handles arbitrary feature wording like "the user opens the Hyundai Australia website".
+  const m = key.match(/^(?:the\s+)?([a-z][a-z0-9-]*)\s+(?:australia|au|usa|uk|india)?\s*website$/i);
+  if (m) {
+    const brand = m[1].toLowerCase();
+    if (/australia|\bau\b/.test(key)) return `https://www.${brand}.com.au/`;
+    return `https://www.${brand}.com/`;
+  }
+  return '';
 }
 
 /**
@@ -336,6 +350,13 @@ function categorizeStep(text) {
   if (lower.includes('loaded the test data') || lower.includes('load the test data') || lower.includes('test data from the confluence') || lower.includes('test data from the excel'))
     return 'data_load';
 
+  // Menu / submenu interaction — "navigates to the X menu", "clicks the X menu",
+  // "opens the X submenu". These look navigational but are actually nav-bar clicks,
+  // NOT page.goto(). Route to 'click' so we hover/click a header element.
+  if (/\b(?:menu|sub-?menu|nav(?:igation)?\s+item|dropdown)\b/i.test(text) &&
+      /(?:navigates?\s+to|clicks?|opens?|hovers?\s+over|selects?)/i.test(text))
+    return 'click';
+
   // Navigation
   // Recognises explicit verbs ("navigates to", "opens", "visits", "goes to")
   // and implicit setup phrasings used in Background sections such as
@@ -535,8 +556,9 @@ function extractElementInfo(text) {
   const nonUrlQuoted = quoted.filter(q => !q.startsWith('http'));
   if (nonUrlQuoted.length > 0) info.value = nonUrlQuoted[0];
 
-  // Page name — matches 'navigates to Ownership', 'navigates to the Test Drive page', etc.
-  const pageMatch = text.match(/(?:navigates? to|opens?|visits?)\s+(?:the\s+)?(.+?)(?:\s+page\b|\s*"|\s*$)/i);
+  // Page name — matches 'navigates to Ownership', 'navigates to the Test Drive page',
+  // 'opens the Hyundai Australia website', etc.
+  const pageMatch = text.match(/(?:navigates? to|opens?|visits?)\s+(?:the\s+)?(.+?)(?:\s+(?:page|website|site|portal)\b|\s*"|\s*$)/i);
   if (pageMatch) info.pageName = pageMatch[1].trim();
 
   // Implicit navigation — "I am [a user] on the Customer Care page", "I'm on the X page", "user is on the X page"

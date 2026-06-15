@@ -266,6 +266,21 @@ function buildMcpPrompt(failures, relevantStepFiles, allStepFiles) {
     if (failure.featureUri) lines.push(`**Feature file:** ${path.join(ROOT, failure.featureUri)}`);
     if (pageUrl) lines.push(`**Page URL:** ${pageUrl}  ← start MCP navigation here`);
     if (failure.tags) lines.push(`**Tags:** ${failure.tags}`);
+
+    // Include the FULL feature file so Claude can interpret BDD intent like a human.
+    if (failure.featureUri) {
+      try {
+        const featurePath = path.isAbsolute(failure.featureUri)
+          ? failure.featureUri
+          : path.join(ROOT, failure.featureUri);
+        const featureText = fs.readFileSync(featurePath, 'utf-8');
+        lines.push('');
+        lines.push('**Full feature file (interpret each step as a human tester would, not literally):**');
+        lines.push('```gherkin');
+        lines.push(featureText.trim());
+        lines.push('```');
+      } catch { /* ignore */ }
+    }
     lines.push('');
 
     lines.push('**Full step sequence** (✅=passed, ❌=failed, ❓=undefined, ⏭=skipped):');
@@ -304,6 +319,16 @@ function buildMcpPrompt(failures, relevantStepFiles, allStepFiles) {
   }
 
   lines.push('## Fix Rules');
+  lines.push('');
+  lines.push('**INTERPRET GHERKIN LIKE A HUMAN TESTER, NOT LITERALLY.**');
+  lines.push('  • "opens the X website"            → page.goto the brand homepage');
+  lines.push('     (e.g. "Hyundai Australia website" → https://www.hyundai.com.au/).');
+  lines.push('     NEVER pass a non-URL string to page.goto().');
+  lines.push('  • "navigates to the X menu"        → hover/click the header nav item labelled X.');
+  lines.push('  • "clicks the X submenu"           → click the link inside the open flyout.');
+  lines.push('  • "the X page should be displayed" → assert URL slug or visible heading matches X.');
+  lines.push('If an existing implementation calls page.goto() with a value that is clearly a menu');
+  lines.push('label, REPLACE the body with the correct hover/click interaction.');
   lines.push('');
   lines.push('- Use `browser_snapshot` to get the REAL, current selectors — never guess');
   lines.push('- Prefer selectors in this order: id > name > aria-label > role+text > placeholder > CSS class');
