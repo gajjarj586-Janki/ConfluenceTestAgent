@@ -107,14 +107,32 @@ When(/^the user inspects every model and its variants on the calculator$/i, { ti
       error: null,
     };
 
+    // The dealer-aware calculator hides the Drive Away price behind a
+    // "Set your location" modal: the price only hydrates once a dealer/postcode
+    // is chosen. That modal does NOT appear on the /shop/calculator landing
+    // page — it surfaces 2–3s AFTER each model page loads (later than the old
+    // 1500ms gate), so it was missed and the dealer was never set. The page
+    // then sat on its transient "Coming soon at Hyundai" placeholder and the
+    // model was wrongly flagged as coming-soon (e.g. elexio, venue, ioniq-6
+    // variants — which DO have live pricing on stage).
+    //
+    // Once a dealer is set the cookie persists for the rest of the session, so
+    // we wait generously for the modal only until it's been handled once, then
+    // fall back to a quick non-blocking check on subsequent models.
+    const ensureDealerSet = async () => {
+      const waitMs = this._calcDealerSet ? 1200 : 6000;
+      const modal = this.page.locator('.hyu-postcode-modal.tingle-modal--visible').first();
+      const appeared = await modal.isVisible({ timeout: waitMs }).catch(() => false);
+      if (!appeared) return false;
+      try { await handleLocationModal(this.page, '2000'); } catch { /* ignore */ }
+      await this.page.waitForTimeout(1500);
+      this._calcDealerSet = true;
+      return true;
+    };
+
     try {
       await this.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
-      // Quick-check the location modal (avoid 15s waitFor in helper if not present).
-      const hasModal = await this.page.locator('.hyu-postcode-modal.tingle-modal--visible')
-        .first().isVisible({ timeout: 1500 }).catch(() => false);
-      if (hasModal) {
-        try { await handleLocationModal(this.page, '2000'); } catch { /* ignore */ }
-      }
+      await ensureDealerSet();
 
       // Wait for the calculator to render (variant tiles or drive-away price).
       // The page shows a transient "Coming soon at Hyundai" placeholder until
@@ -203,9 +221,13 @@ When(/^the user inspects every model and its variants on the calculator$/i, { ti
       });
 
       let snapshot = await takeSnapshot();
-      // Retry once if the page hasn't surfaced calculator UI yet (slow hydrate).
-      if (!snapshot.comingSoon && !snapshot.optionGroups.length && !snapshot.prices.length) {
-        await this.page.waitForTimeout(5000);
+      // Retry if the page hasn't surfaced calculator UI/prices yet OR it still
+      // reads "coming soon". Both are usually a late location modal or a slow
+      // dealer-price hydrate rather than a genuinely unreleased model, so we
+      // (re-)handle the modal and re-snapshot before trusting the placeholder.
+      if (snapshot.comingSoon || (!snapshot.optionGroups.length && !snapshot.prices.length)) {
+        const handled = await ensureDealerSet();
+        await this.page.waitForTimeout(handled ? 4000 : 5000);
         snapshot = await takeSnapshot();
       }
 
