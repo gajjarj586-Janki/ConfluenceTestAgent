@@ -532,6 +532,10 @@ Before(async function () {
   // Launch browser with realistic user agent to avoid bot detection
   const headless = process.env.HEADLESS !== 'false';
   this.browser = await chromium.launch({
+    // Use the machine's installed Google Chrome instead of Playwright's bundled
+    // Chromium. The bundled-browser download is blocked by endpoint security on
+    // this machine (extraction hangs), so we drive the system Chrome via channel.
+    channel: 'chrome',
     headless,
     args: ['--disable-blink-features=AutomationControlled'],
   });
@@ -775,6 +779,10 @@ After(async function (scenario) {
   const status = scenario.result?.status?.toString() || 'unknown';
   const testUrl = this._testUrl || (this.page ? this.page.url() : '');
 
+  // Ensure the output dir exists. `screenshots/` is gitignored, so on a fresh
+  // checkout it won't exist and writeFileSync would throw ENOENT.
+  fs.mkdirSync('screenshots', { recursive: true });
+
   if (this.page) {
     // Allow time for any pending API responses and DOM updates to settle
     await this.page.waitForTimeout(1500);
@@ -830,7 +838,7 @@ After(async function (scenario) {
         this._capturedApiPayloads || [],
         scenario.pickle.name
       );
-      const tmpBrowser = await chromium.launch({ headless: true });
+      const tmpBrowser = await chromium.launch({ channel: 'chrome', headless: true });
       const tmpPage = await tmpBrowser.newPage();
       await tmpPage.setViewportSize({ width: 1400, height: 800 });
       await tmpPage.setContent(html, { waitUntil: 'domcontentloaded' });

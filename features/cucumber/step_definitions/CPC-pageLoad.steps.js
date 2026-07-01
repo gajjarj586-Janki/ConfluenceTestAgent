@@ -200,21 +200,24 @@ When(/^the user opens the CPC page for every model$/i, { timeout: 20 * 60 * 1000
         .first().isVisible({ timeout: 2000 }).catch(() => false);
       if (cpcModal) { try { await handleLocationModal(this.page, '2000'); } catch { /* ignore */ } }
 
-      // 4. Wait for the calculator to actually RENDER (mirrors
-      //    calculator_pricing.steps.js). Positive signals: a Drive Away price, a
-      //    calculator option heading, or a "coming soon" placeholder (the page
-      //    DID finish loading, it just shows a placeholder). If none appear
-      //    within the budget the page never finished loading.
+      // 4. Wait for the INTERACTIVE calculator UI to actually render. The only
+      //    trustworthy "loaded" signal is real calculator content — variant /
+      //    powertrain / transmission / colour selectors, a "Change vehicle" /
+      //    "Estimated Drive Away" control, or a price.
+      //    IMPORTANT: we do NOT treat "Coming soon at Hyundai" as a signal — that
+      //    is a site-wide promo block present on EVERY calculator page (including
+      //    ones that load fine, e.g. VENUE), so it cannot indicate load state.
       const rendered = await this.page.waitForFunction(() => {
         const priceRe = /\$\s*\d{1,3}(?:,\d{3})+(?:\.\d{2})?/;
         const body = document.body ? (document.body.innerText || '') : '';
-        if (priceRe.test(body)) return true;
-        if (/pricing\s+coming\s+soon|coming\s+soon\s+at\s+hyundai/i.test(body)) return true;
-        for (const el of document.querySelectorAll('h2, h3, h4, p, span, div')) {
+        if (/change vehicle|estimated drive away/i.test(body)) return true;
+        for (const el of document.querySelectorAll('h1, h2, h3, h4, p, span, div')) {
           if (el.offsetParent === null) continue;
           const t = (el.innerText || '').trim();
-          if (/^(Select energy type|Select variant|Choose your powertrain|Transmission|Drive Away Price)\.?$/i.test(t)) return true;
+          if (/^(Select energy type|Body Type|Select variant|Choose your powertrain|Transmission|Drive Away Price|Colour)\.?$/i.test(t)) return true;
         }
+        // A drive-away/repayment price only appears once the calculator renders.
+        if (priceRe.test(body) && /drive away|price summary|repayment|finance/i.test(body)) return true;
         return false;
       }, { timeout: RENDER_TIMEOUT_MS }).then(() => true).catch(() => false);
       entry.loadMs = Date.now() - startedAt;
@@ -230,30 +233,38 @@ When(/^the user opens the CPC page for every model$/i, { timeout: 20 * 60 * 1000
       const snap = await this.page.evaluate(() => {
         const priceRe = /\$\s*\d{1,3}(?:,\d{3})+(?:\.\d{2})?/;
         const bodyText = (document.body && document.body.innerText || '').trim();
+        const lower = bodyText.toLowerCase();
         const headings = Array.from(document.querySelectorAll('h1,h2,h3,h4'))
           .filter(el => el.offsetParent !== null)
           .map(el => (el.innerText || '').trim())
           .filter(Boolean);
-        const hasCalcUI = headings.some(t =>
-          /^(Select energy type|Body Type|Select variant|Choose your powertrain|Transmission|Drive Away Price|Colour)\.?$/i.test(t)
-        ) || !!document.querySelector('[class*="cpc" i], [class*="calculator" i]');
+        // Real, INTERACTIVE calculator UI. Deliberately NOT matching on
+        // [class*="calculator"|"cpc"] nor the "Coming soon at Hyundai" promo —
+        // both are present on non-loading placeholder pages too.
+        const hasCalcUI =
+          headings.some(t =>
+            /^(Select energy type|Body Type|Select variant|Choose your powertrain|Transmission|Drive Away Price|Colour)\.?$/i.test(t)
+          ) || /change vehicle|estimated drive away|view price summary/i.test(lower);
         return {
           textLen: bodyText.length,
           headingCount: headings.length,
           hasPrice: priceRe.test(bodyText),
           hasCalcUI,
-          comingSoon: /pricing\s+coming\s+soon|coming\s+soon\s+at\s+hyundai/i.test(bodyText),
+          // "Coming soon" placeholder text — used ONLY to describe WHY a page that
+          // failed to render the calculator did not load; never as a load signal.
+          comingSoonText: /pricing\s+coming\s+soon|coming\s+soon\s+at\s+hyundai/i.test(bodyText),
         };
       });
 
-      // A page counts as LOADED if the calculator rendered, a price showed, or a
-      // "coming soon" placeholder appeared (it finished loading either way).
-      const loaded = rendered || snap.hasCalcUI || snap.hasPrice || snap.comingSoon;
-      entry.comingSoon = snap.comingSoon && !snap.hasPrice && !snap.hasCalcUI;
-      if (!loaded && !entry.error) {
-        // Nothing meaningful rendered. Empty body → blank; otherwise the
-        // calculator never finished loading → "loading forever".
-        if (snap.headingCount === 0 && snap.textLen < 200) entry.blank = true;
+      // The calculator counts as loaded only when its real UI rendered.
+      const calcRendered = rendered || snap.hasCalcUI || snap.hasPrice;
+      if (!calcRendered && !entry.error) {
+        // Calculator never rendered. Classify why:
+        //  • coming-soon placeholder shown → model's CPC page did not open
+        //  • empty body → blank
+        //  • otherwise → never finished loading
+        if (snap.comingSoonText) entry.comingSoon = true;
+        else if (snap.headingCount === 0 && snap.textLen < 200) entry.blank = true;
         else entry.stillLoading = true;
       }
     } catch (err) {
@@ -265,16 +276,16 @@ When(/^the user opens the CPC page for every model$/i, { timeout: 20 * 60 * 1000
 
     const ok = isCpcPass(entry);
     const label = ok
-      ? (entry.comingSoon
-          ? `OK — coming soon (HTTP ${entry.httpStatus}, ${entry.loadMs}ms)`
-          : `OK (HTTP ${entry.httpStatus}, ${entry.driveAwayPrice || 'rendered'}, ${entry.loadMs}ms)`)
+      ? `OK (HTTP ${entry.httpStatus}, ${entry.driveAwayPrice || 'rendered'}, ${entry.loadMs}ms)`
       : entry.error
         ? `ERROR: ${entry.error}`
         : entry.httpStatus !== 200
           ? `HTTP ${entry.httpStatus}`
-          : entry.blank
-            ? 'BLANK'
-            : 'STILL LOADING';
+          : entry.comingSoon
+            ? 'COMING SOON (calculator did not open)'
+            : entry.blank
+              ? 'BLANK'
+              : 'STILL LOADING';
     console.log(`  • ${entry.name.padEnd(22)} → ${label}`);
     results.push(entry);
   }
@@ -283,10 +294,12 @@ When(/^the user opens the CPC page for every model$/i, { timeout: 20 * 60 * 1000
 });
 
 // A model PASSES when its CPC page opened (HTTP 200, or no doc response but the
-// URL reached the page), rendered content, and isn't blank/stuck/errored.
+// URL reached the page), rendered the calculator, and isn't blank/stuck/errored.
+// A "Coming soon" placeholder is a FAIL: the calculator page did not actually
+// open for that model — only a placeholder rendered.
 function isCpcPass(r) {
   const statusOk = r.httpStatus === 200 || (r.httpStatus == null && !r.error);
-  return statusOk && !r.blank && !r.stillLoading && !r.error;
+  return statusOk && !r.blank && !r.stillLoading && !r.comingSoon && !r.error;
 }
 
 // ── Assertion steps. Following the calculator_pricing pattern, these collect
@@ -322,6 +335,13 @@ Then(/^no model's CPC page should still be loading after (\d+) seconds$/i, async
   }
 });
 
+Then(/^no model's CPC page should show a Coming Soon placeholder$/i, async function () {
+  const results = this._cpcLoadResults || [];
+  for (const o of results.filter(r => r.comingSoon)) {
+    recordCpcFailure(this, `${o.slug}: CPC calculator page did not open — shows "Coming soon" placeholder`);
+  }
+});
+
 Then(/^a CPC page-load report should be generated$/i, async function () {
   const results = this._cpcLoadResults || [];
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').replace('T', '_').slice(0, 19);
@@ -345,8 +365,8 @@ Then(/^a CPC page-load report should be generated$/i, async function () {
     if (r.httpStatus != null && r.httpStatus !== 200) return `CPC page returned HTTP ${r.httpStatus}`;
     if (r.blank) return 'CPC page is blank (no calculator content rendered)';
     if (r.stillLoading) return `CPC page never finished loading within ${RENDER_TIMEOUT_MS / 1000}s (calculator UI never rendered)`;
-    // Loaded fine — a "coming soon" placeholder is a note, not a failure.
-    if (r.comingSoon) return 'Note: page loaded but shows "Pricing coming soon" placeholder';
+    // A "coming soon" placeholder means the calculator page did not open.
+    if (r.comingSoon) return 'CPC calculator page did not open — shows "Coming soon" placeholder';
     return '';
   };
   const isPass = isCpcPass;
@@ -458,6 +478,18 @@ Then(/^a CPC page-load report should be generated$/i, async function () {
       passed: results.filter(isPass).map(r => r.slug),
       failed: results.filter(r => !isPass(r)).map(r => ({ slug: r.slug, reason: failureReason(r) })),
     }, null, 2), 'application/json');
+  }
+
+  // Safety net: this report step always runs, whereas the individual assertion
+  // steps ("...should return HTTP 200", "...Coming Soon placeholder", etc.) can
+  // go missing if the .feature is re-fetched from Confluence without them. So
+  // fail the scenario for ANY model that did not pass, deriving the reason from
+  // the results directly — not from the per-category steps having run.
+  for (const r of results.filter(r => !isPass(r))) {
+    // Skip if a per-category step already recorded a failure for this model
+    // (its wording may differ slightly), so each model is reported once.
+    const already = (this._cpcLoadFailures || []).some(l => l.startsWith(`${r.slug}:`));
+    if (!already) recordCpcFailure(this, `${r.slug}: ${failureReason(r) || 'CPC page did not load'}`);
   }
 
   // Data-content failure (CPC page not loading). The scenario is tagged

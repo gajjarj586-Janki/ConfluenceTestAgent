@@ -21,6 +21,9 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
+        // Drive the installed Google Chrome (bundled Chromium download is blocked
+        // by endpoint security on this machine — see world.js for details).
+        channel: 'chrome',
         launchOptions: {
           args: ['--disable-blink-features=AutomationControlled'],
         },

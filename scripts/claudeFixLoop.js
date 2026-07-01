@@ -30,15 +30,35 @@ const maxIterArg = args.find((_, i) => args[i - 1] === '--max-iterations');
 const MAX_ITERATIONS = maxIterArg ? parseInt(maxIterArg, 10) : 5;
 
 // ─── Locate claude binary ─────────────────────────────────────────────────────
+// Resolve the claude executable from PATH first so this works regardless of the
+// npm prefix (nvm4w, custom prefixes, etc.), then fall back to known locations.
+function resolveClaudeFromPath() {
+  try {
+    const finder = process.platform === 'win32' ? 'where' : 'which';
+    const res = spawnSync(finder, ['claude'], { encoding: 'utf-8', timeout: 10000 });
+    if (res.status === 0 && res.stdout) {
+      const lines = res.stdout.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+      // On Windows prefer an executable wrapper (.cmd/.exe/.bat) over the
+      // extension-less shell script so spawnSync can launch it directly.
+      return lines.find(l => /\.(cmd|exe|bat)$/i.test(l)) || lines[0];
+    }
+  } catch { /* fall through to static candidates */ }
+  return null;
+}
+
 const CLAUDE_CANDIDATES = [
+  resolveClaudeFromPath(),
   'C:\\Users\\janki.gajjar\\AppData\\Roaming\\npm\\claude.cmd',
   'C:\\Users\\janki.gajjar\\AppData\\Roaming\\npm\\claude',
   'claude',
-];
+].filter(Boolean);
 
 function spawnClaude(candidate, args, opts = {}) {
   const isCmd = candidate.endsWith('.cmd') || candidate.endsWith('.bat');
-  return spawnSync(candidate, args, { shell: isCmd, ...opts });
+  // On Windows a bare command name (e.g. "claude") only resolves to claude.cmd
+  // via PATHEXT when run through a shell; spawnSync without a shell fails ENOENT.
+  const needsShell = isCmd || (process.platform === 'win32' && !path.isAbsolute(candidate));
+  return spawnSync(candidate, args, { shell: needsShell, ...opts });
 }
 
 function findClaude() {
@@ -639,12 +659,36 @@ function buildPrompt(failures, relevantStepFiles, allStepFiles, locatorMap = {})
 function invokeClaudeFix(claudePath, prompt) {
   console.log('🤖 Invoking Claude Code to analyse failures and fix step definitions...\n');
 
-  // Detect MCP config so Claude can use Playwright MCP for live page inspection
-  const mcpConfigPath = path.join(ROOT, '.vscode', 'mcp.json');
-  const hasMcpConfig = fs.existsSync(mcpConfigPath);
+  // Detect MCP config so Claude can use Playwright MCP for live page inspection.
+  // .vscode/mcp.json uses VSCode's schema (top-level "servers" key), but the
+  // Claude Code CLI requires "mcpServers". Translate it into a temp config Claude
+  // accepts rather than mutating the VSCode file (which would break editor MCP).
+  // Also repoint the filesystem server at the real project root.
+  const vscodeMcpPath = path.join(ROOT, '.vscode', 'mcp.json');
+  let mcpConfigPath = null;
+  let hasMcpConfig = false;
+  if (fs.existsSync(vscodeMcpPath)) {
+    try {
+      const raw = JSON.parse(fs.readFileSync(vscodeMcpPath, 'utf-8'));
+      const servers = raw.mcpServers || raw.servers || {};
+      if (Object.keys(servers).length > 0) {
+        if (Array.isArray(servers.filesystem?.args)) {
+          servers.filesystem.args = servers.filesystem.args.map(a =>
+            /ConfluenceTestAgent[\\/]*$/i.test(a) ? ROOT : a
+          );
+        }
+        mcpConfigPath = path.join(ROOT, '.cache', 'claude-mcp-config.json');
+        fs.mkdirSync(path.dirname(mcpConfigPath), { recursive: true });
+        fs.writeFileSync(mcpConfigPath, JSON.stringify({ mcpServers: servers }, null, 2));
+        hasMcpConfig = true;
+      }
+    } catch (e) {
+      console.warn(`  ⚠️  Could not parse ${vscodeMcpPath}: ${e.message} — proceeding without MCP`);
+    }
+  }
 
   if (hasMcpConfig) {
-    console.log(`  🔌 MCP config: ${mcpConfigPath}`);
+    console.log(`  🔌 MCP config: ${mcpConfigPath} (translated from .vscode/mcp.json)`);
     console.log('  📡 Playwright MCP + Filesystem MCP enabled for interactive page inspection\n');
   }
 
@@ -674,8 +718,13 @@ function invokeClaudeFix(claudePath, prompt) {
 
   const allTools = ['Edit', 'Read', 'Write', 'Bash', ...playwrightMcpTools, ...filesystemMcpTools];
 
+  // Pass the prompt via stdin, NOT as a CLI argument. On Windows a .cmd runs
+  // through cmd.exe (shell:true), which caps the whole command line at ~8191
+  // chars — the escalated prompt (full file contents) overflows it and cmd.exe
+  // aborts with "The command line is too long." `claude -p` reads the prompt
+  // from stdin when no positional prompt is supplied.
   const claudeArgs = [
-    '-p', prompt,
+    '-p',
     '--allowedTools', allTools.join(','),
     '--dangerously-skip-permissions',
     ...(hasMcpConfig ? ['--mcp-config', mcpConfigPath] : []),
@@ -686,6 +735,7 @@ function invokeClaudeFix(claudePath, prompt) {
     cwd: ROOT,
     shell: isCmd,
     encoding: 'utf-8',
+    input: prompt,
     stdio: ['pipe', 'inherit', 'inherit'],
     timeout: 600000, // 10 minutes max per fix attempt
     maxBuffer: 50 * 1024 * 1024,

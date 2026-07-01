@@ -30,7 +30,7 @@ const selectedPaths = getSelectedPaths();
 // alongside the selected one. Top-level export keeps `paths` honoured.
 export default {
   paths: selectedPaths,
-  require: [
+  import: [
     'features/cucumber/support/world.js',
     'features/cucumber/step_definitions/**/*.js',
   ],

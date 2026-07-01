@@ -15,6 +15,7 @@ Feature: Hyundai CPC - Ensure all models' CPC pages load
     Then every model's CPC page should return HTTP status 200
     And no model's CPC page should be blank
     And no model's CPC page should still be loading after 30 seconds
+    And no model's CPC page should show a Coming Soon placeholder
     And a CPC page-load report should be generated
       # "Opens" = clicks each model tile on the calculator landing page to open
       # its CPC page (a real user journey, which also catches broken model links),
