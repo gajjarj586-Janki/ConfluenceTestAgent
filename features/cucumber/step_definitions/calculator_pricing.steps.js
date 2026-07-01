@@ -394,8 +394,24 @@ When(/^the user inspects every model and its variants on the calculator$/i, { ti
             await target.scrollIntoViewIfNeeded({ timeout: 4000 });
             await target.click({ timeout: 5000 });
           } catch (e) {
-            await this.page.evaluate(() => document.querySelector('[data-pw-target="1"]')?.removeAttribute('data-pw-target')).catch(() => {});
-            return { ok: false, reason: `click-failed: ${(e.message || '').split('\n')[0]}` };
+            // The CPC option tiles are frequently overlapped by the sticky
+            // "Drive Away / Finance / Lease" tab bar, so the tile's centre is
+            // covered and a normal (actionability-checked) click times out —
+            // this is what dropped KONA Electric / Electric Premium pricing.
+            // Recentre the tile (away from the sticky bar) and retry with a
+            // FORCED click: still a real trusted pointer event (which the widget
+            // requires — a synthetic element.click() does not drive it), but it
+            // skips the "receives events" wait.
+            try {
+              await this.page.evaluate(() =>
+                document.querySelector('[data-pw-target="1"]')?.scrollIntoView({ block: 'center', inline: 'center' })
+              ).catch(() => {});
+              await this.page.waitForTimeout(200);
+              await target.click({ timeout: 5000, force: true });
+            } catch (e2) {
+              await this.page.evaluate(() => document.querySelector('[data-pw-target="1"]')?.removeAttribute('data-pw-target')).catch(() => {});
+              return { ok: false, reason: `click-failed: ${(e2.message || '').split('\n')[0]}` };
+            }
           }
           // Verify the tile toggled to a selected state, then clear the marker.
           const verify = await this.page.evaluate(() => {

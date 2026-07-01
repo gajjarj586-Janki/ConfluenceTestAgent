@@ -216,9 +216,16 @@ async function stepGenerateAndUploadReports(runStartMs, reportOnly = false) {
   // env-specific column (e.g. "Stage Report" / "Production Report").
   try {
     const cachePath = path.join(ROOT, '.cache', 'activeEnvironment.json');
-    if (fs.existsSync(cachePath) && !process.env.TARGET_ENVIRONMENT) {
+    if (fs.existsSync(cachePath)) {
       const cache = JSON.parse(fs.readFileSync(cachePath, 'utf-8'));
       if (cache.activeEnvironment) {
+        // The report must target the column for the environment the tests
+        // ACTUALLY ran against (resolved into the cache) — NOT a stale
+        // TARGET_ENVIRONMENT left in .env. Otherwise a Production run gets
+        // logged under the Stage Report column.
+        if (process.env.TARGET_ENVIRONMENT && process.env.TARGET_ENVIRONMENT !== cache.activeEnvironment) {
+          console.log(`   → Ignoring TARGET_ENVIRONMENT="${process.env.TARGET_ENVIRONMENT}" from .env; using active environment "${cache.activeEnvironment}" from this run.`);
+        }
         process.env.TARGET_ENVIRONMENT = cache.activeEnvironment;
         console.log(`   → Target Confluence column: "${cache.activeEnvironment} Report"`);
       }
